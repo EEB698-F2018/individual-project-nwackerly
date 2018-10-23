@@ -21,6 +21,8 @@ b2 = 1
 b3 = -0.5
 b4 = -1
 b5 = 1.5
+b6 = 0.001
+airtemp = runif(3000, min=70, max=110)
 sd = 1.5
 
 pos_beh = rep( c("pos_beh1", "pos_beh2" , "pos_beh3", "pos_beh4", "pos_beh5", "pos_beh6"), each = nrep)
@@ -30,25 +32,26 @@ eps = rnorm(npos*nrep, 0, sd)
 
 #simulate response
 therm_t = b0 + b1*(pos_beh == "pos_beh2") + b2*(pos_beh == "pos_beh3") + b3*(pos_beh == "pos_beh4") + 
-  b4*(pos_beh == "pos_beh5") + b5*(pos_beh == "pos_beh6") + eps 
+  b4*(pos_beh == "pos_beh5") + b5*(pos_beh == "pos_beh6") + b6*airtemp + eps 
 
 #combine into a data frame
-sim_data <- as.data.frame(cbind(pos_beh, eps, therm_t))
+sim_data <- as.data.frame(cbind(pos_beh, airtemp, eps, therm_t))
 write.csv(sim_data, "_data/_tidy/sim_data.csv")
 
 #fitting the model
-simtherm = lm(therm_t ~ pos_beh)
+simtherm = lm(therm_t ~ pos_beh + airtemp)
 summary(simtherm)
 
 #make it a function
 
-sim_fun = function(nrep = 500, b0 = 37.25, b1 = 0.5, b2 = 1, b3 = -0.5, b4 = -1, b5 = 1.5, sigma = 1.5) {
+sim_fun = function(nrep = 500, b0 = 37.25, b1 = 0.5, b2 = 1, b3 = -0.5, b4 = -1, b5 = 1.5, b6 = 0.001, sigma = 1.5) {
   npos = 6
   pos_beh = rep( c("pos_beh1", "pos_beh2", "pos_beh3", "pos_beh4", "pos_beh5", "pos_beh6"), each = nrep)
+  airtemp = runif(3000, min=70, max=110)
   eps = rnorm(npos*nrep, 0, sigma)
   therm_t = b0 + b1*(pos_beh == "pos_beh2") + b2*(pos_beh == "pos_beh3") + b3*(pos_beh == "pos_beh4") + 
-    b4*(pos_beh == "pos_beh5") + b5*(pos_beh == "pos_beh6") + eps
-  therm_t_fit = lm(therm_t ~ pos_beh)
+    b4*(pos_beh == "pos_beh5") + b5*(pos_beh == "pos_beh6") + b6*airtemp + eps
+  therm_t_fit = lm(therm_t ~ pos_beh + airtemp)
   therm_t_fit
 }
 
@@ -96,3 +99,10 @@ sims %>%
   ggplot( aes(estimate) ) +
   geom_density(fill = "blue", alpha = .5) +
   geom_vline( xintercept = 1.5)
+
+sims %>%
+  map_df(tidy) %>%
+  filter(term == "airtemp") %>%
+  ggplot( aes(estimate) ) +
+  geom_density(fill = "blue", alpha = .5) +
+  geom_vline( xintercept = 0.001)

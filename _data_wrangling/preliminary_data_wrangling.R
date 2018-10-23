@@ -118,6 +118,15 @@ View(preliminary_data2)
 
 ###################################################################################
 
+#Add time of day column
+preliminary_data2$time_od <- NA
+
+preliminary_data2$time_od[preliminary_data2$time <= 32400] <- "e_morning"
+preliminary_data2$time_od[preliminary_data2$time > 32400 & preliminary_data2$time <= 43200] <- "l_morning"
+preliminary_data2$time_od[preliminary_data2$time > 43200 & preliminary_data2$time <= 50400] <- "e_afternoon"
+preliminary_data2$time_od[preliminary_data2$time > 50400 & preliminary_data2$time < 61200] <- "l_afternoon"
+preliminary_data2$time_od[preliminary_data2$time >= 61200] <- "evening"
+
 #create tidy database for analysis
 write.csv(preliminary_data2, "C:/Users/nw185_000/Documents/Iowa/Dissertation/Data/individual-project-nwackerly/_data/_tidy/prelim_data_tidycols.csv", row.names=F)
 
