@@ -15,6 +15,10 @@ View(bipedal_data)
 str(prelim_tidy)
 str(bipedal_data)
 
+##
+prelim_tidy$time_od <- factor(prelim_tidy$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+
+
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
 numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
@@ -54,16 +58,26 @@ with(bipedal_data, ftable(individual, pos_beh, context))
 
 ################################################################################
 # Graphics
+##histogram
+hist(prelim_tidy$therm_t)
+hist(prelim_tidy$sun)
+
 ##boxplot
 boxplot(prelim_tidy$therm_t)
 boxplot(therm_t ~ pos_beh, data=prelim_tidy)
 boxplot(therm_t ~ context, data=prelim_tidy)
 boxplot(therm_t ~ hab_type, data=prelim_tidy)
 boxplot(therm_t ~ substrate, data=prelim_tidy)
+boxplot(therm_t ~ time_od, data = prelim_tidy)
+boxplot(therm_t ~ individual, data = prelim_tidy)
 
-##histogram
-hist(prelim_tidy$therm_t)
-hist(prelim_tidy$sun)
+#plotting pred against each other
+boxplot(sun ~ hab_type, data = prelim_tidy) #correlation between the two
+boxplot(sun ~ time_od, data = prelim_tidy)
+boxplot(sun ~ pos_beh, data = prelim_tidy)
+boxplot(sun ~ context, data = prelim_tidy) #QW???
+boxplot(sun ~ individual, data = prelim_tidy)
+
 
 #coplot
 #effect of positional behavior on body temp given context
@@ -73,6 +87,8 @@ coplot(therm_t ~ pos_beh | hab_type, data=prelim_tidy)
 ## plot
 plot(prelim_tidy$sun, prelim_tidy$therm_t)
 plot(prelim_tidy$time, prelim_tidy$therm_t)
+plot(prelim_tidy$date, prelim_tidy$therm_t)
+
 
 ################################################################
 ## ggplot
