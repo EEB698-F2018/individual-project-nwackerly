@@ -127,6 +127,7 @@ preliminary_data2$time_od[preliminary_data2$time > 43200 & preliminary_data2$tim
 preliminary_data2$time_od[preliminary_data2$time > 50400 & preliminary_data2$time < 61200] <- "l_afternoon"
 preliminary_data2$time_od[preliminary_data2$time >= 61200] <- "evening"
 preliminary_data2$time_od <- factor(preliminary_data2$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+levels(preliminary_data2$time_od)
 
 #create tidy database for analysis
 write.csv(preliminary_data2, "C:/Users/nw185_000/Documents/Iowa/Dissertation/Data/individual-project-nwackerly/_data/_tidy/prelim_data_tidycols.csv", row.names=F)
