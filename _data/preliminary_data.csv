@@ -2160,7 +2160,7 @@ date,individual,time,pos_beh,context,substrate,hab_type,sun,temp,t_lo,t_hi
 2018-07-08,DW,11:45,Ly,So,T,WD,25,Os,Os,Os
 2018-07-08,DW,11:50,QS,So,T,WD,50,35.3,27.1,35.3
 2018-07-08,DW,11:55,Os,Os,Os,Os,Os,Os,Os,Os
-2018-07-08,DW,12:00,QW,Tv,T,WD,25,Os,Os,Os
+2018-07-08,DW,12:00,QW,QW,T,WD,25,Os,Os,Os
 2018-07-08,MI,12:06,St,Fo,A,WD,25,32,23.8,33
 2018-07-08,MI,12:10,St,RE,A,WD,25,Os,Os,Os
 2018-07-08,MI,12:15,St,RE,A,WD,25,Os,Os,Os
