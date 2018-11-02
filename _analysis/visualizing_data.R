@@ -6,14 +6,20 @@ library(magrittr)
 library(ggplot2)
 
 #read in data
-prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
-View(prelim_tidy)
+prelim_tidy1 <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
+View(prelim_tidy1)
 
 bipedal_data <- read_csv("_summary/bipedal_table.csv")
 View(bipedal_data)
 
-str(prelim_tidy)
+str(prelim_tidy1)
 str(bipedal_data)
+
+##omit any missing values
+summary(is.na(prelim_tidy1))
+
+prelim_tidy<-na.omit(prelim_tidy1)
+View(prelim_tidy)
 
 ##
 prelim_tidy$time_od <- factor(prelim_tidy$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))

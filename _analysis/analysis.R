@@ -34,7 +34,7 @@ dotchart(prelim_temp$therm_t)
 boxplot(prelim_temp$therm_t ~ prelim_temp$pos_beh,  ylab="body temp")
 
 
-# i.	Plot response against each predictor and random effect. 
+# Plot response against each predictor and random effect. 
 ggplot(prelim_temp, aes(pos_beh, therm_t, color=context))+
   geom_boxplot()
 
