@@ -23,16 +23,18 @@ View(prelim_temp)
 #Combine positional behaviors into smaller categories
 # suspensory = Cb, Br & QM
 #Vertical climb and cling together
-prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Sp"
-prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Sp"
-prelim_temp$pos_beh[prelim_temp$pos_beh == "QM"] <- "Sp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "QM"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 
 ###
 hist(prelim_temp$therm_t)
 dotchart(prelim_temp$therm_t)
 boxplot(prelim_temp$therm_t ~ prelim_temp$pos_beh,  ylab="body temp")
-
 
 # Plot response against each predictor and random effect. 
 ggplot(prelim_temp, aes(pos_beh, therm_t, color=context))+
@@ -48,44 +50,30 @@ with(prelim_temp, table(pos_beh, time_od))
 with(prelim_temp, table(pos_beh, hab_type, time_od))
 
 ## choosing models
-#### positional behavior on body temp
-therm_mod1 <- lm(therm_t ~ pos_beh, data = prelim_temp)
+### full model
+therm_mod <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                     (1|individual) + pos_beh*hab_type + pos_beh*sun + time_od*sun,
+                     data = prelim_temp)
 
-model.matrix(therm_mod1)
+##minus pos_beh/sun interaction
+therm_mod2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                    (1|individual) + pos_beh*hab_type + time_od*sun,
+                  data = prelim_temp)
 
-summary(therm_mod1)
+##plus pos_beh*sun, minus pos_beh*hab_type
+therm_mod3 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                     (1|individual) + pos_beh*sun + time_od*sun,
+                   data = prelim_temp)
 
-### multiple linear regression
-therm_mod2 <- lm(therm_t ~ pos_beh + time_od + sun, data = prelim_temp)
+##minus interactions with pos_beh
+therm_mod4 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                    (1|individual) + time_od*sun,
+                  data = prelim_temp)
 
-model.matrix(therm_mod2)
-
-summary(therm_mod2)
-
-###interaction between pos_beh and time of day
-therm_mod3 <- lm(therm_t ~ pos_beh*time_od + sun, data = prelim_temp)
-
-model.matrix(therm_mod3)
-
-summary(therm_mod3)
-
-## plus habitat type
-therm_mod4 <- lm(therm_t ~ pos_beh + time_od + sun + hab_type, data = prelim_temp)
-
-model.matrix(therm_mod4)
-
-summary(therm_mod4)
-
-### interaction of time of day and sun
-therm_mod5 <- lm(therm_t ~ pos_beh + time_od*sun, data = prelim_temp)
-
-model.matrix(therm_mod5)
-
-summary(therm_mod5)
-
-#### Model testing
-###AIC
-AIC(therm_mod1, therm_mod2, therm_mod3, therm_mod4, therm_mod5, therm_mod6, therm_mod7)
+##minus all interactions
+therm_mod5 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                     (1|individual),
+                   data = prelim_temp)
 
 
 ### plus individual random effect
