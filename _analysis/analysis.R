@@ -6,6 +6,7 @@ library(magrittr)
 library(ggplot2)
 library(car)
 library(emmeans)
+library(lme4)
 
 #read in data
 prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
@@ -50,6 +51,8 @@ with(prelim_temp, table(pos_beh, time_od))
 with(prelim_temp, table(pos_beh, hab_type, time_od))
 
 ## choosing models
+##GLMER
+
 ### full model
 therm_mod <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
                      (1|individual) + pos_beh*hab_type + pos_beh*sun + time_od*sun,
@@ -70,19 +73,66 @@ therm_mod4 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context
                     (1|individual) + time_od*sun,
                   data = prelim_temp)
 
-##minus all interactions
+##minus time_od interaction
 therm_mod5 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
+                     (1|individual) + pos_beh*sun,
+                   data = prelim_temp)
+
+##minus all interactions
+therm_mod6 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + context + 
                      (1|individual),
                    data = prelim_temp)
 
+####compare interaction models
+AIC(therm_mod3, therm_mod4, therm_mod5, therm_mod6) ###lowest AIC is with no interaction (3226.904; DF: 23)
+                                               ###second lowest is time_od*sun (3255.461, DF: 27)
+                                               ###continue forward with time_od*sun & no interactions
+###############################################################
+##time_od*sun models
+## minus context 
+therm_mod7 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+                     (1|individual) + time_od*sun,
+                   data = prelim_temp)
 
-### plus individual random effect
-## GLMER ##
-library(lme4)
-therm_mod6 <- lmer(therm_t ~ pos_beh + time_od*sun + (1|individual), data = prelim_temp)
+##minus hab_type
+therm_mod8 <- lmer(therm_t ~ pos_beh + time_od + sun + date + context + 
+                     (1|individual) + time_od*sun,
+                   data = prelim_temp)
 
-summary(therm_mod6)
+##minus date
+therm_mod9 <- lmer(therm_t ~ pos_beh + time_od + sun + hab_type + context + 
+                     (1|individual) + time_od*sun,
+                   data = prelim_temp)
 
+##minus hab_type & context
+therm_mod10 <- lmer(therm_t ~ pos_beh + time_od + sun + date + 
+                     (1|individual) + time_od*sun,
+                   data = prelim_temp)
+
+###############################################################################
+###no interactions
+## minus context 
+therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+                     (1|individual), data = prelim_temp)
+
+##minus hab_type
+therm_mod12 <- lmer(therm_t ~ pos_beh + time_od + sun + date + context + 
+                     (1|individual), data = prelim_temp)
+
+##minus date
+therm_mod13 <- lmer(therm_t ~ pos_beh + time_od + sun + hab_type + context + 
+                     (1|individual), data = prelim_temp)
+
+##minus hab_type & context
+therm_mod14 <- lmer(therm_t ~ pos_beh + time_od + sun + date + 
+                      (1|individual), data = prelim_temp)
+
+#####################################################################
+####Compare models
+###
+
+
+#####################################################################
 #extract residuals
 E1 <- resid(therm_mod6, type = "pearson")
 
