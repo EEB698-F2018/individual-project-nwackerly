@@ -136,9 +136,22 @@ AIC(therm_mod11, therm_mod12, therm_mod13, therm_mod14) ##models 11 and 14 are l
 
 ###compare between types of models
 AIC(therm_mod4, therm_mod6, therm_mod7, therm_mod10, therm_mod8, therm_mod11, therm_mod14)
+        ##best models (11, 14, 6) exclude context and exclude interactions
+        ##run a few more tests and include one with the interaction still (model 7)
+
+### more comparison #########
+anova(therm_mod6, therm_mod7)
+anova(therm_mod6, therm_mod11)
+anova(therm_mod6, therm_mod14)
+
+anova(therm_mod7, therm_mod11)
+anova(therm_mod7, therm_mod14)
+
+anova(therm_mod11, therm_mod14)
 
 #####################################################################
-#extract residuals
+#extract residuals 
+###model 6
 E1 <- resid(therm_mod6, type = "pearson")
 
 #plot fitted vs residuals
@@ -148,46 +161,48 @@ plot(x = F1,
      y = E1, 
      xlab = "Fitted values",
      ylab = "Pearson residuals", 
+     main = "Model 6",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
 
-
-##plus context random effect
-therm_mod7 <- lmer(therm_t ~ pos_beh + time_od*sun + (1|individual) + (1|context), data = prelim_temp)
-
-summary(therm_mod7)
-
-#extract residuals
-E2 <- resid(therm_mod7, type = "pearson")
+### model 11 ###########
+E2 <- resid(therm_mod11, type = "pearson")
 
 #plot fitted vs residuals
-F2 <- fitted(therm_mod7, type = "response")
+F2 <- fitted(therm_mod11, type = "response")
 
 plot(x = F2, 
      y = E2, 
      xlab = "Fitted values",
      ylab = "Pearson residuals", 
+     main = "Model 11",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
 
-###with habitat type
-therm_mod8 <- lmer(therm_t ~ pos_beh + time_od*sun + hab_type + (1|individual) + (1|context), data = prelim_temp)
-
-summary(therm_mod8)
-
-#extract residuals
-E3 <- resid(therm_mod8, type = "pearson")
+### model 14 ###########
+E3 <- resid(therm_mod14, type = "pearson")
 
 #plot fitted vs residuals
-F3 <- fitted(therm_mod8, type = "response")
+F3 <- fitted(therm_mod14, type = "response")
 
 plot(x = F3, 
      y = E3, 
      xlab = "Fitted values",
      ylab = "Pearson residuals", 
+     main = "Model 14",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
 
-#### Model testing
-###AIC
-AIC(therm_mod1, therm_mod2, therm_mod3, therm_mod4, therm_mod5, therm_mod6, therm_mod7, therm_mod8)
+### model 7 ###########
+E4 <- resid(therm_mod7, type = "pearson")
+
+#plot fitted vs residuals
+F4 <- fitted(therm_mod7, type = "response")
+
+plot(x = F4, 
+     y = E4, 
+     xlab = "Fitted values",
+     ylab = "Pearson residuals", 
+     main = "Model 7",
+     cex.lab = 1.5)
+abline(h = 0, lty = 2)
