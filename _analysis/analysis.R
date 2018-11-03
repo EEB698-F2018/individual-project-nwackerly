@@ -108,6 +108,10 @@ therm_mod9 <- lmer(therm_t ~ pos_beh + time_od + sun + hab_type + context +
 therm_mod10 <- lmer(therm_t ~ pos_beh + time_od + sun + date + 
                      (1|individual) + time_od*sun,
                    data = prelim_temp)
+###Compare models
+AIC(therm_mod7, therm_mod8, therm_mod9, therm_mod10) ##model 7 and 10 are lowest (3247.068 & 3248.205, resp.)
+                                      ##model 8 isn't far off, though, (3255. 603) 
+                                 ##and it may be important to include context
 
 ###############################################################################
 ###no interactions
@@ -127,8 +131,10 @@ therm_mod13 <- lmer(therm_t ~ pos_beh + time_od + sun + hab_type + context +
 therm_mod14 <- lmer(therm_t ~ pos_beh + time_od + sun + date + 
                       (1|individual), data = prelim_temp)
 
-#####################################################################
-####Compare models
+###Compare models
+AIC(therm_mod11, therm_mod12, therm_mod13, therm_mod14) ##models 11 and 14 are lowest (3218.163 & 3218.819, resp.)
+
+
 ###
 
 

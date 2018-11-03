@@ -41,8 +41,8 @@ summary(bipedal_data)
 
 #explore using tables
 ### prelim_tidy
-with(prelim_tidy, table(pos_beh, context))
-with(prelim_tidy, table(pos_beh, hab_type))
+with(prelim_tidy, table(pos_beh, context)) ##certain positions correlated with certain contexts
+with(prelim_tidy, table(pos_beh, hab_type)) ##not enough overlap
 with(prelim_tidy, table(pos_beh, substrate))
 
 with(prelim_tidy, ftable(pos_beh, context, hab_type))
