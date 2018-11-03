@@ -134,9 +134,8 @@ therm_mod14 <- lmer(therm_t ~ pos_beh + time_od + sun + date +
 ###Compare models
 AIC(therm_mod11, therm_mod12, therm_mod13, therm_mod14) ##models 11 and 14 are lowest (3218.163 & 3218.819, resp.)
 
-
-###
-
+###compare between types of models
+AIC(therm_mod4, therm_mod6, therm_mod7, therm_mod10, therm_mod8, therm_mod11, therm_mod14)
 
 #####################################################################
 #extract residuals
