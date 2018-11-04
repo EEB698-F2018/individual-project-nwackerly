@@ -140,14 +140,12 @@ AIC(therm_mod4, therm_mod6, therm_mod7, therm_mod10, therm_mod8, therm_mod11, th
         ##run a few more tests and include one with the interaction still (model 7)
 
 ### more comparison #########
-anova(therm_mod6, therm_mod7)
-anova(therm_mod6, therm_mod11)
-anova(therm_mod6, therm_mod14)
-
-anova(therm_mod7, therm_mod11)
-anova(therm_mod7, therm_mod14)
-
-anova(therm_mod11, therm_mod14)
+anova(therm_mod6, therm_mod7) ##not nested, so can't run
+anova(therm_mod6, therm_mod11) ##no signif
+anova(therm_mod6, therm_mod14) ##no signif
+anova(therm_mod11, therm_mod14) ##significance, so model 11 better than 14
+                          #####think I'll choose model 11 since it includes habitat type
+                        ##### and it's AIC value is best (3218.163 vs. 3226.904 (model 6) & 3218.819 (model 14))
 
 #####################################################################
 #extract residuals 
@@ -206,3 +204,5 @@ plot(x = F4,
      main = "Model 7",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
+
+### residual plots all seem relatively normal; cloud around horizontal axis, indicating a good fit
