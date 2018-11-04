@@ -206,3 +206,23 @@ plot(x = F4,
 abline(h = 0, lty = 2)
 
 ### residual plots all seem relatively normal; cloud around horizontal axis, indicating a good fit
+###################################################################
+##Model 11 - includes pos_beh, time_od, sun, date, hab_type and (1|individual) 
+E2 <- resid(therm_mod11, type = "pearson")
+
+#plot fitted vs residuals
+F2 <- fitted(therm_mod11, type = "response")
+
+plot(x = F2, 
+     y = E2, 
+     xlab = "Fitted values",
+     ylab = "Pearson residuals", 
+     main = "Model 11",
+     cex.lab = 1.5)
+abline(h = 0, lty = 2)
+
+boxplot(E2 ~ pos_beh, data=prelim_temp) 
+boxplot(E2 ~ time_od, data=prelim_temp)
+plot(x=prelim_temp$sun, y=E2)
+boxplot(E2 ~ hab_type, data=prelim_temp)
+plot(x=prelim_temp$date, y=E2)
