@@ -226,3 +226,14 @@ boxplot(E2 ~ time_od, data=prelim_temp)
 plot(x=prelim_temp$sun, y=E2)
 boxplot(E2 ~ hab_type, data=prelim_temp)
 plot(x=prelim_temp$date, y=E2)
+
+model.matrix(therm_mod11)
+
+##summary
+summary(therm_mod11)
+
+##confidence intervals 
+confint(therm_mod11) ###how do I change the "reference" level? I want to see Bipedalism, but it's the "reference"
+##maybe I don't need habitat in there because none of the levels are significant
+
+confint(therm_mod14)
