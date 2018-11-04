@@ -32,6 +32,11 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 
+############
+##re-order levels
+prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+
 ###
 hist(prelim_temp$therm_t)
 dotchart(prelim_temp$therm_t)
@@ -230,10 +235,11 @@ plot(x=prelim_temp$date, y=E2)
 model.matrix(therm_mod11)
 
 ##summary
-summary(therm_mod11)
+summary(therm_mod11) 
 
 ##confidence intervals 
-confint(therm_mod11) ###how do I change the "reference" level? I want to see Bipedalism, but it's the "reference"
-##maybe I don't need habitat in there because none of the levels are significant
+confint(therm_mod11) ##maybe I don't need habitat in there because none of the levels are significant
 
+##model 14
+summary(therm_mod14)
 confint(therm_mod14)
