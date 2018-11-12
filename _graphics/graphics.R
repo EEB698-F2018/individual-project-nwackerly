@@ -51,3 +51,9 @@ ggplot(prelim_temp, aes(time_od))+
 
 ggplot(prelim_temp, aes(sun))+
   geom_histogram()
+
+###model plotting
+m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+       (1|individual), data = prelim_temp)
+prelim_temp$pred <- predict(m1, type="response")
+
