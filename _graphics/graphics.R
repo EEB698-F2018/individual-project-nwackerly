@@ -38,3 +38,16 @@ prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "Sq", 
 ##plotting
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
   geom_boxplot() + labs(x="Positional Behavior", y="Body Temperature")
+
+##counts
+ggplot(prelim_temp, aes(pos_beh))+
+  geom_bar(stat="count")  ###maybe combine squat and sit
+
+ggplot(prelim_temp, aes(hab_type))+
+  geom_bar(stat="count") ###can I combine bamboo with bamboo woodland?
+
+ggplot(prelim_temp, aes(time_od))+
+  geom_bar(stat="count")
+
+ggplot(prelim_temp, aes(sun))+
+  geom_histogram()
