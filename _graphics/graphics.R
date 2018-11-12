@@ -37,17 +37,37 @@ prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "Sq", 
 
 ##plotting
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
-  geom_boxplot() + labs(x="Positional Behavior", y="Body Temperature")
+  geom_boxplot() + labs(x="Positional Behavior", y="Body Temperature") +
+  theme_classic()
+
+ggplot(prelim_temp, aes(individual, therm_t)) +
+  geom_boxplot() + labs(x="Individual", y="Body Temperature") +
+  theme_classic()
+
+ggplot(prelim_temp, aes(hab_type, therm_t)) +
+  geom_boxplot() + labs(x="Habitat Type", y="Body Temperature") +
+  theme_classic()
+
+ggplot(prelim_temp, aes(time_od, therm_t)) +
+  geom_boxplot() + labs(x="Time of Day", y="Body Temperature") +
+  theme_classic()
 
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count")  ###maybe combine squat and sit
+  geom_bar(stat="count") + labs(x="Positional Behavior", y="Count") +
+  theme_classic()  ###maybe combine squat and sit
 
 ggplot(prelim_temp, aes(hab_type))+
-  geom_bar(stat="count") ###can I combine bamboo with bamboo woodland?
+  geom_bar(stat="count") + labs(x="Habitat Type", y="Count")+
+  theme_minimal()    ###can I combine bamboo with bamboo woodland?
 
 ggplot(prelim_temp, aes(time_od))+
-  geom_bar(stat="count")
+  geom_bar(stat="count") + labs(x="Time of Day", y="Count")+
+  theme_minimal()
+
+ggplot(prelim_temp, aes(individual))+
+  geom_bar(stat="count") + labs(x="Individual", y="Count")+
+  theme_minimal()
 
 ggplot(prelim_temp, aes(sun))+
   geom_histogram()
