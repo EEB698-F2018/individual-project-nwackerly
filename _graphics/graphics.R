@@ -24,6 +24,7 @@ View(prelim_temp)
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "QM"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
@@ -32,7 +33,7 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 ############
 ##re-order levels
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "QS", "QW", "Bp", "Su", "VC"))
 
 
 ##plotting
