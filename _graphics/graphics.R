@@ -56,7 +56,7 @@ ggplot(prelim_temp, aes(time_od, therm_t)) +
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
   geom_bar(stat="count") + labs(x="Positional Behavior", y="Count") +
-  theme_classic()  ###maybe combine squat and sit
+  theme_classic()  
 
 ggplot(prelim_temp, aes(hab_type))+
   geom_bar(stat="count") + labs(x="Habitat Type", y="Count")+
