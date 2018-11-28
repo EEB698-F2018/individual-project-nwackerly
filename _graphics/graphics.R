@@ -74,11 +74,19 @@ ggplot(prelim_temp, aes(sun))+
   geom_histogram()
 
 ###model plotting
+library(broom)
 m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
        (1|individual), data = prelim_temp)
 
+summary(m1)
+m1_res <- tidy(coef(summary(m1)) ) 
+
+ggplot(m1_res, aes())
+
+
 ###
 prelim_temp$pred <- predict(m1, type="response")
+
 
 
 ##attempting to follow tutorial but got too confused....
