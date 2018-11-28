@@ -39,7 +39,7 @@ prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "QS", 
 ##plotting
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
   geom_boxplot() + labs(x="Positional Behavior", y="Body Temperature") +
-  theme_classic()
+  theme_classic() + geom_boxplot(fill = "white", colour = "blue")
 
 ggplot(prelim_temp, aes(individual, therm_t)) +
   geom_boxplot() + labs(x="Individual", y="Body Temperature") +
