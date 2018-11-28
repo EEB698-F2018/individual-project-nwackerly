@@ -76,4 +76,17 @@ ggplot(prelim_temp, aes(sun))+
 ###model plotting
 m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
        (1|individual), data = prelim_temp)
+
+###
 prelim_temp$pred <- predict(m1, type="response")
+
+
+##attempting to follow tutorial but got too confused....
+preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od),
+                                          sun = levels(sun), date = levels(date), hab_type = levels(hab_type)))
+
+mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type)
+
+pframe2 <- data.frame(preddata,eta=mm%*%fixef(m1))
+pvar1 <- diag(mm %*% tcrossprod(vcov(m1),mm))
+tvar1 <- pvar1+VarCorr(m1)$individual
