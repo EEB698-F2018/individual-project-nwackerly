@@ -31,12 +31,11 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
-prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
 
 ############
 ##re-order levels
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "St", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("St","Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
 ###
 hist(prelim_temp$therm_t)
