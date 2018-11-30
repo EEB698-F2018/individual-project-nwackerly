@@ -84,13 +84,18 @@ ggplot(m1_res, aes(pos_beh, therm_t)) +
   geom_point()
 
 
-
+ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
+  #geom_point(size = 3) +
+  geom_point(aes(y=predict(m1)), size = 1)
 
 ##attempting to follow tutorial but got too confused....
-preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od),
-                                          sun = levels(sun), date = levels(date), hab_type = levels(hab_type)))
+preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = "l_morning", 
+                                          sun = 50, date = "2018-06-28", hab_type = "WD"))
+              #time_od = levels(time_od))) ##
+str(preddata)
+preddata$date <- as.Date(preddata$date)
 
-mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type)
+mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type, data=preddata)
 
 pframe2 <- data.frame(preddata,eta=mm%*%fixef(m1))
 pvar1 <- diag(mm %*% tcrossprod(vcov(m1),mm))
