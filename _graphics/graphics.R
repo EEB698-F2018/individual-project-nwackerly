@@ -98,5 +98,14 @@ preddata$date <- as.Date(preddata$date)
 mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type, data=preddata)
 
 pframe2 <- data.frame(preddata,eta=mm%*%fixef(m1))
+pframe2 <- with(pframe2,data.frame(pframe2,prop=eta))
 pvar1 <- diag(mm %*% tcrossprod(vcov(m1),mm))
 tvar1 <- pvar1+VarCorr(m1)$individual
+pframe2 <- data.frame(
+  pframe2
+  , plo = pframe2$eta-2*sqrt(pvar1)
+  , phi = pframe2$eta+2*sqrt(pvar1)
+  , tlo = pframe2$eta-2*sqrt(tvar1)
+  , thi = pframe2$eta+2*sqrt(tvar1)
+)
+
