@@ -84,9 +84,6 @@ ggplot(m1_res, aes(pos_beh, therm_t)) +
   geom_point()
 
 
-###
-prelim_temp$pred <- predict(m1, type="response")
-
 
 
 ##attempting to follow tutorial but got too confused....
