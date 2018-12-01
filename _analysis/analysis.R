@@ -37,6 +37,15 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("St","Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
+##change to factor & numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+
+prelim_temp[factor_cols] <- lapply(prelim_temp[factor_cols], as.factor)
+
+prelim_temp[numeric_cols] <- lapply(prelim_temp[numeric_cols], as.numeric)
+
+
 ###
 hist(prelim_temp$therm_t)
 dotchart(prelim_temp$therm_t)
@@ -282,6 +291,8 @@ str(prelim_temp3)
 ##model 11 with outliers
 therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
                       (1|individual), data = prelim_temp)
+summary(therm_mod11)
+confint(therm_mod11)
 
 ##model minus outliers
 mod_2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
