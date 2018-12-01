@@ -113,7 +113,7 @@ ggplot(prelim_temp, aes(pos_beh, therm_t)) +
   labs(x="Positional Behavior", y="Body Temperature") +
   theme_classic()
 
-##labels = c("Sit", "Lie", "Squate", "Quadrupedal Stand", 
+##labels = c("Sit", "Lie", "Squat", "Quadrupedal Stand", 
            #"Quadrupedal Walk", "Bipedal", "Suspensory", 
            #"Vertical Climb/Cling")
 
