@@ -20,6 +20,13 @@ summary(is.na(prelim_tidy))
 prelim_temp<-na.omit(prelim_tidy)
 View(prelim_temp)
 
+prelim_temp$therm_t[prelim_temp$therm_t >= 42] <- NA
+
+View(prelim_temp)
+
+prelim_temp<-na.omit(prelim_temp)
+View(prelim_temp)
+
 #Combine positional behaviors into smaller categories
 # suspensory = Cb, Br & QM
 #Vertical climb and cling together
