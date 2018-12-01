@@ -254,6 +254,30 @@ View(prelim_temp2)
 prelim_temp3<-na.omit(prelim_temp2)
 View(prelim_temp3)
 
+#Vertical climb and cling together
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Cb"] <- "Su"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Br"] <- "Su"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "QM"] <- "Su"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Vci"] <- "VC"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Abp"] <- "Bp"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "BpS"] <- "Bp"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "BpW"] <- "Bp"
+
+############
+##re-order levels
+prelim_temp3$time_od <- factor(prelim_temp3$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St","Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+
+###change to factor & numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+
+prelim_temp3[factor_cols] <- lapply(prelim_temp3[factor_cols], as.factor)
+
+prelim_temp3[numeric_cols] <- lapply(prelim_temp3[numeric_cols], as.numeric)
+
+str(prelim_temp3)
+
 ###check model minus outliers
 ##model 11 with outliers
 therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
@@ -262,5 +286,5 @@ therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
 ##model minus outliers
 mod_2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
-
+summary(mod_2)
 confint(mod_2)
