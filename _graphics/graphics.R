@@ -7,6 +7,8 @@ library(ggplot2)
 library(car)
 library(emmeans)
 library(lme4)
+library(ggthemes)
+library(plyr)
 
 ##read in data
 prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
@@ -34,6 +36,15 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("St", "Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
+## Change to factor and numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+
+prelim_temp[factor_cols] <- lapply(prelim_temp[factor_cols], as.factor)
+
+prelim_temp[numeric_cols] <- lapply(prelim_temp[numeric_cols], as.numeric)
+
+str(prelim_temp)
 
 ##plotting
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
@@ -78,24 +89,39 @@ m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
        (1|individual), data = prelim_temp)
 
 summary(m1)
-m1_res <- tidy(coef(summary(m1)) ) 
 
-ggplot(m1_res, aes(pos_beh, therm_t)) +
-  geom_point()
+#m1_res <- tidy(coef(summary(m1)) ) 
+
+#ggplot(m1_res, aes(pos_beh, therm_t)) +
+  #geom_point()
 
 
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
   #geom_point(size = 3) +
   geom_point(aes(y=predict(m1)), size = 1)
 
+ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
+  geom_point(size = 3) +
+  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red")
+
 ##attempting to follow tutorial but got too confused....
-preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = "l_morning", 
+preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), 
                                           sun = 50, date = "2018-06-28", hab_type = "WD"))
-              #time_od = levels(time_od))) ##
-str(preddata)
+
+###
+factor_cols <- c("pos_beh", "time_od", "hab_type")
+numeric_cols <- c("sun")
+
+preddata[factor_cols] <- lapply(preddata[factor_cols], as.factor)
+
+preddata[numeric_cols] <- lapply(preddata[numeric_cols], as.numeric)
+
 preddata$date <- as.Date(preddata$date)
 
+str(preddata)
+########
 mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type, data=preddata)
+###won't work because I don't have 2 or more levels per factor
 
 pframe2 <- data.frame(preddata,eta=mm%*%fixef(m1))
 pframe2 <- with(pframe2,data.frame(pframe2,prop=eta))
