@@ -102,7 +102,13 @@ ggplot(prelim_temp, aes(pos_beh, therm_t)) +
 
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
   geom_point(size = 3) +
-  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red")
+  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") +
+  labs(x="Positional Behavior", y="Body Temperature") +
+  theme_classic()
+
+##labels = c("Sit", "Lie", "Squate", "Quadrupedal Stand", 
+           #"Quadrupedal Walk", "Bipedal", "Suspensory", 
+           #"Vertical Climb/Cling")
 
 ##attempting to follow tutorial but got too confused....
 preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), 
