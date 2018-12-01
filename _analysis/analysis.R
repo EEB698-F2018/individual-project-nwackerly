@@ -288,3 +288,33 @@ mod_2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
                 (1|individual), data = prelim_temp3)
 summary(mod_2)
 confint(mod_2)
+
+
+##plotting residuals
+##model 11
+E2 <- resid(therm_mod11, type = "pearson")
+
+#plot fitted vs residuals
+F2 <- fitted(therm_mod11, type = "response")
+
+plot(x = F2, 
+     y = E2, 
+     xlab = "Fitted values",
+     ylab = "Pearson residuals", 
+     main = "Model 11",
+     cex.lab = 1.5)
+abline(h = 0, lty = 2)
+
+##mod_2
+E5 <- resid(mod_2, type = "pearson")
+
+#plot fitted vs residuals
+F5 <- fitted(mod_2, type = "response")
+
+plot(x = F5, 
+     y = E5, 
+     xlab = "Fitted values",
+     ylab = "Pearson residuals", 
+     main = "Mod_2",
+     cex.lab = 1.5)
+abline(h = 0, lty = 2)
