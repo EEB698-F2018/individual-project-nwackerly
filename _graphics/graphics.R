@@ -38,10 +38,11 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
 
+
 ############
 ##re-order levels
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("St", "Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
 
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
@@ -92,11 +93,12 @@ ggplot(prelim_temp, aes(sun))+
 
 ###model plotting
 library(broom)
+
 m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
        (1|individual), data = prelim_temp)
 
 summary(m1)
-
+confint(m1)
 #m1_res <- tidy(coef(summary(m1)) ) 
 
 #ggplot(m1_res, aes(pos_beh, therm_t)) +
