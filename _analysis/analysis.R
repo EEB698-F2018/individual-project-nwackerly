@@ -243,3 +243,24 @@ confint(therm_mod11) ##maybe I don't need habitat in there because none of the l
 ##model 14
 summary(therm_mod14)
 confint(therm_mod14)
+
+
+##### OMIT OUTLIERS ###
+prelim_temp2 <- prelim_temp
+prelim_temp2$therm_t[prelim_temp2$therm_t >= 42] <- NA
+
+View(prelim_temp2)
+
+prelim_temp3<-na.omit(prelim_temp2)
+View(prelim_temp3)
+
+###check model minus outliers
+##model 11 with outliers
+therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+                      (1|individual), data = prelim_temp)
+
+##model minus outliers
+mod_2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+
+confint(mod_2)
