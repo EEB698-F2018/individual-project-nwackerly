@@ -329,3 +329,7 @@ plot(x = F5,
      main = "Model",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
+
+#HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file. 
+library(emmeans)
+emmeans(mod_2, list(pairwise ~ pos_beh), adjust = "tukey")

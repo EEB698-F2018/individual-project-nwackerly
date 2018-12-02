@@ -109,10 +109,6 @@ summary(m1)
 confint(m1)
 #predict(m1, preddata)
 
-#HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file. 
-library(emmeans)
-emmeans(m1, list(pairwise ~ pos_beh), adjust = "tukey")
-
 #m1_res <- tidy(coef(summary(m1)) ) 
 #ggplot(m1_res, aes(pos_beh, therm_t)) +
   #geom_point()
