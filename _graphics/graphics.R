@@ -8,24 +8,25 @@ library(car)
 library(emmeans)
 library(lme4)
 library(ggthemes)
-library(plyr)
+library(plyr) #HSR note- if you need plyr, need to load it before tidyverse. But dplyr in tidyverse does everything plyr can do and more, so shoudln't need plyr. 
 
 ##read in data
 prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
 View(prelim_tidy)
+nrow(prelim_tidy) #2873 rows
 
 #Omit any missing values:
-summary(is.na(prelim_tidy))
+summary(is.na(prelim_tidy)) #looks like missing lots of therm data
 
 prelim_temp<-na.omit(prelim_tidy)
 View(prelim_temp)
+nrow(prelim_temp) #810 rows; most rows were removed bc therm data missing. 
 
-prelim_temp$therm_t[prelim_temp$therm_t >= 42] <- NA
+prelim_temp$therm_t[prelim_temp$therm_t >= 42] <- NA #remove therm values >42 because likely a temp sensor problem? 6 rows removed.  
 
+prelim_temp<-na.omit(prelim_temp) #remove those rows with NA's
 View(prelim_temp)
-
-prelim_temp<-na.omit(prelim_temp)
-View(prelim_temp)
+nrow(prelim_temp) #now 804 rows
 
 #Combine positional behaviors into smaller categories
 # suspensory = Cb, Br & QM
@@ -56,36 +57,44 @@ str(prelim_temp)
 
 ##plotting
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
-  geom_boxplot() + labs(x="Positional Behavior", y="Body Temperature") +
-  theme_classic() + geom_boxplot(fill = "white", colour = "blue")
+  geom_boxplot(fill = "white", colour = "blue") + 
+  labs(x="Positional Behavior", y="Body Temperature") +
+  theme_classic()
 
 ggplot(prelim_temp, aes(individual, therm_t)) +
-  geom_boxplot() + labs(x="Individual", y="Body Temperature") +
+  geom_boxplot() + 
+  labs(x="Individual", y="Body Temperature") +
   theme_classic()
 
 ggplot(prelim_temp, aes(hab_type, therm_t)) +
-  geom_boxplot() + labs(x="Habitat Type", y="Body Temperature") +
+  geom_boxplot() + 
+  labs(x="Habitat Type", y="Body Temperature") +
   theme_classic()
 
 ggplot(prelim_temp, aes(time_od, therm_t)) +
-  geom_boxplot() + labs(x="Time of Day", y="Body Temperature") +
+  geom_boxplot() + 
+  labs(x="Time of Day", y="Body Temperature") +
   theme_classic()
 
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count") + labs(x="Positional Behavior", y="Count") +
+  geom_bar(stat="count") + 
+  labs(x="Positional Behavior", y="Count") +
   theme_classic()  
 
 ggplot(prelim_temp, aes(hab_type))+
-  geom_bar(stat="count") + labs(x="Habitat Type", y="Count")+
+  geom_bar(stat="count") + 
+  labs(x="Habitat Type", y="Count")+
   theme_minimal()    ###can I combine bamboo with bamboo woodland?
 
 ggplot(prelim_temp, aes(time_od))+
-  geom_bar(stat="count") + labs(x="Time of Day", y="Count")+
+  geom_bar(stat="count") + 
+  labs(x="Time of Day", y="Count")+
   theme_minimal()
 
 ggplot(prelim_temp, aes(individual))+
-  geom_bar(stat="count") + labs(x="Individual", y="Count")+
+  geom_bar(stat="count") + 
+  labs(x="Individual", y="Count")+
   theme_minimal()
 
 ggplot(prelim_temp, aes(sun))+
@@ -94,38 +103,39 @@ ggplot(prelim_temp, aes(sun))+
 ###model plotting
 library(broom)
 
-m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
        (1|individual), data = prelim_temp)
-
 summary(m1)
 confint(m1)
-#m1_res <- tidy(coef(summary(m1)) ) 
+#predict(m1, preddata)
 
+#HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file. 
+library(emmeans)
+emmeans(m1, list(pairwise ~ pos_beh), adjust = "tukey")
+
+#m1_res <- tidy(coef(summary(m1)) ) 
 #ggplot(m1_res, aes(pos_beh, therm_t)) +
   #geom_point()
 
-
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
-  #geom_point(size = 3) +
+  geom_point(size = 3) +
   geom_point(aes(y=predict(m1)), size = 1)
 
 #change levels for the plot
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
-  geom_point(size = 3) +
-  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") +
-  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat",
-                        "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
+  geom_point(size = 3, colour = "blue") + #shows raw data
+  geom_boxplot(colour="blue")+ #shows raw data
+  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") + #shows model predictions
+  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
   scale_y_continuous(name = "Body Temperature") +
   theme_classic()
+#hsr: what this tells me is that the model predictions are pretty close to the raw data. (red and blue boxplots are similar). You can plot just the raw data and see the pattern, if you'd like. 
 
-
+###################
 ##change levels back
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
-
-
-library(nlme)
 
 ##tried another thing and it didn't work...
 #newdat <- expand.grid(pos_beh=unique(prelim_temp$pos_beh), 
@@ -141,24 +151,23 @@ library(nlme)
   #scale_size_manual(name="Predictions", values=c("Positional Behavior"=3)) +
   #theme_classic() 
 
-
+## Create dataframe to predict over
 ##attempting to follow tutorial but got too confused....
-preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), 
-                                          sun = 50, date = "2018-06-28", hab_type = "WD"))
+preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), sun = c(0,50,100), date = c("2018-06-28", "2018-06-06", "2018-07-16"), hab_type = c("WD", "WG", "GL"), individual = c("DW","JM", "LT")))
 
-###
-factor_cols <- c("pos_beh", "time_od", "hab_type")
+factor_cols <- c("pos_beh", "time_od", "hab_type", "individual")
 numeric_cols <- c("sun")
 
 preddata[factor_cols] <- lapply(preddata[factor_cols], as.factor)
-
 preddata[numeric_cols] <- lapply(preddata[numeric_cols], as.numeric)
 
 preddata$date <- as.Date(preddata$date)
 
 str(preddata)
+
 ########
 mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type, data=preddata)
+
 ###won't work because I don't have 2 or more levels per factor
 
 pframe2 <- data.frame(preddata,eta=mm%*%fixef(m1))
