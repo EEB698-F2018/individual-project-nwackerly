@@ -109,15 +109,38 @@ ggplot(prelim_temp, aes(pos_beh, therm_t)) +
   #geom_point(size = 3) +
   geom_point(aes(y=predict(m1)), size = 1)
 
+#change levels for the plot
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
   geom_point(size = 3) +
   geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") +
-  labs(x="Positional Behavior", y="Body Temperature") +
+  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat",
+                        "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
+  scale_y_continuous(name = "Body Temperature") +
   theme_classic()
 
-##labels = c("Sit", "Lie", "Squat", "Quadrupedal Stand", 
-           #"Quadrupedal Walk", "Bipedal", "Suspensory", 
-           #"Vertical Climb/Cling")
+
+##change levels back
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
+
+
+library(nlme)
+
+##tried another thing and it didn't work...
+#newdat <- expand.grid(pos_beh=unique(prelim_temp$pos_beh), 
+                      #time_od=unique(prelim_temp$time_od),
+                      #sun=c(min(prelim_temp$sun),
+                       #     max(prelim_temp$sun)),
+                      #date=date(prelim_temp$date),
+                      #hab_type=unique(prelim_temp$hab_type))
+                      
+#ggplot(prelim_temp, aes(x=pos_beh, y=therm_t)) +
+ # geom_point(size=3) +
+  #geom_line(data=newdat, aes(y=predict(m1, level=0, newdata=newdat), size="Positional Behavior")) +
+  #scale_size_manual(name="Predictions", values=c("Positional Behavior"=3)) +
+  #theme_classic() 
+
 
 ##attempting to follow tutorial but got too confused....
 preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), 
