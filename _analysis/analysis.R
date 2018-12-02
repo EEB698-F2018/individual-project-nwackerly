@@ -323,9 +323,9 @@ E5 <- resid(mod_2, type = "pearson")
 F5 <- fitted(mod_2, type = "response")
 
 plot(x = F5, 
-     y = E5, 
+     y = E5,
      xlab = "Fitted values",
      ylab = "Pearson residuals", 
-     main = "Mod_2",
+     main = "Model",
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
