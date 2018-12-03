@@ -56,10 +56,19 @@ prelim_temp[numeric_cols] <- lapply(prelim_temp[numeric_cols], as.numeric)
 str(prelim_temp)
 
 ##plotting
+## Change levels for the plot 
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+
 ggplot(prelim_temp, aes(pos_beh, therm_t)) +
-  geom_boxplot(fill = "white", colour = "blue") + 
-  labs(x="Positional Behavior", y="Body Temperature") +
+  geom_boxplot(fill = "white", colour = "blue", size = 1) + 
+  ggtitle("Effect of Positional Behavior on Body Temperature (Raw)") +
+  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat", 
+                        "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", 
+                        "Vert. Climb/Cling")) +
+  scale_y_continuous(name = "Body Temperature") +
   theme_classic()
+
+#labels = c("Lie", "Sit", "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling"
 
 ggplot(prelim_temp, aes(individual, therm_t)) +
   geom_boxplot() + 
