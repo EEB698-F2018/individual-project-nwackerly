@@ -107,6 +107,11 @@ m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
        (1|individual), data = prelim_temp)
 summary(m1)
 confint(m1)
+
+#ggplot(fortify(m1), aes(pos_beh, therm_t)) +
+  #stat_summary(fun.data=mean_se, geom="pointrange") +
+  #stat_summary(aes(y=.fitted), fun.y=mean, geom="line")
+
 #predict(m1, preddata)
 
 #m1_res <- tidy(coef(summary(m1)) ) 
