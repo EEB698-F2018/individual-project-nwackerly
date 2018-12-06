@@ -59,14 +59,17 @@ str(prelim_temp)
 ## Change levels for the plot 
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
-ggplot(prelim_temp, aes(pos_beh, therm_t)) +
-  geom_boxplot(fill = "white", colour = "blue", size = 1) + 
-  ggtitle("Effect of Positional Behavior on Body Temperature (Raw)") +
-  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat", 
-                        "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", 
-                        "Vert. Climb/Cling")) +
-  scale_y_continuous(name = "Body Temperature") +
-  theme_classic()
+pb_raw_plot <- ggplot(prelim_temp, aes(pos_beh, therm_t)) +
+                  geom_boxplot(fill = "white", colour = "blue", size = 1) + 
+                  ggtitle("Effect of Positional Behavior on Body Temperature (Raw)") +
+                  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", 
+                                        "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", 
+                                        "Suspensory", "Vert. Climb/Cling")) +
+                  scale_y_continuous(name = "Body Temperature") +
+                  theme_classic()
+pb_raw_plot
+
+ggsave("pb_raw_plot.pdf", width=10, height=6, units="in")
 
 #labels = c("Lie", "Sit", "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling"
 
@@ -134,14 +137,21 @@ ggplot(prelim_temp, aes(pos_beh, therm_t)) +
 #change levels for the plot
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
-ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
-  geom_point(size = 3, colour = "blue") + #shows raw data
-  geom_boxplot(colour="blue")+ #shows raw data
-  geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") + #shows model predictions
-  scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
-  scale_y_continuous(name = "Body Temperature") +
-  theme_classic()
+pred_v_obs <- ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
+              geom_point(size = 3, colour = "blue") + #shows raw data
+              geom_boxplot(colour="blue")+ #shows raw data
+              geom_boxplot(aes(y=predict(m1)), size = 1, colour = "red") + #shows model predictions
+              scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", 
+                                      "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", 
+                                      "Suspensory", "Vert. Climb/Cling")) +
+              scale_y_continuous(name = "Body Temperature") +
+              theme_classic()
+
+pred_v_obs
 #hsr: what this tells me is that the model predictions are pretty close to the raw data. (red and blue boxplots are similar). You can plot just the raw data and see the pattern, if you'd like. 
+
+##save plot for reference
+ggsave("pred_v_obs.pdf", width=10, height=6, units="in")
 
 ###################
 ##change levels back
