@@ -69,7 +69,10 @@ pb_raw_plot <- ggplot(prelim_temp, aes(pos_beh, therm_t)) +
                   theme_classic()
 pb_raw_plot
 
+##save plot
 ggsave("pb_raw_plot.pdf", width=10, height=6, units="in")
+
+ggsave("pb_raw_plot.png", width=10, height=6, units="in")
 
 #labels = c("Lie", "Sit", "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", "Suspensory", "Vert. Climb/Cling"
 
@@ -152,6 +155,8 @@ pred_v_obs
 
 ##save plot for reference
 ggsave("pred_v_obs.pdf", width=10, height=6, units="in")
+
+ggsave("pred_v_obs.png", width=10, height=6, units="in")
 
 ###################
 ##change levels back
