@@ -107,7 +107,7 @@ preliminary_data$individual[preliminary_data$individual == "Df"] <- "DF"
 
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
-numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
 preliminary_data[factor_cols] <- lapply(preliminary_data[factor_cols], as.factor)
 preliminary_data[numeric_cols] <- lapply(preliminary_data[numeric_cols], as.numeric)
 str(preliminary_data)
