@@ -34,7 +34,7 @@ head(preliminary_data)
 summary(is.na(preliminary_data))
 
 #rename thermo-temperature column
-names(preliminary_data) <- c("date", "individual","time","pos_beh","context","substrate","hab_type","sun","therm_t","t_lo","t_hi")
+names(preliminary_data) <- c("date", "individual","time","pos_beh","context","substrate","hab_type","sun","therm_t","t_lo","t_hi","amb_t")
 names(preliminary_data)
 
 ##############################################################################################
