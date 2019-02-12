@@ -27,7 +27,7 @@ prelim_tidy$time_od <- factor(prelim_tidy$time_od, levels = c("e_morning", "l_mo
 
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
-numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
 
 prelim_tidy[factor_cols] <- lapply(prelim_tidy[factor_cols], as.factor)
 bipedal_data[factor_cols] <- lapply(bipedal_data[factor_cols], as.factor)
@@ -67,9 +67,11 @@ with(bipedal_data, ftable(individual, pos_beh, context))
 ##histogram
 hist(prelim_tidy$therm_t)
 hist(prelim_tidy$sun)
+hist(prelim_tidy$amb_t)
 
 ##boxplot
 boxplot(prelim_tidy$therm_t)
+boxplot(prelim_tidy$amb_t)
 boxplot(therm_t ~ pos_beh, data=prelim_tidy)
 boxplot(therm_t ~ context, data=prelim_tidy)
 boxplot(therm_t ~ hab_type, data=prelim_tidy)
@@ -83,17 +85,20 @@ boxplot(sun ~ time_od, data = prelim_tidy)
 boxplot(sun ~ pos_beh, data = prelim_tidy)
 boxplot(sun ~ context, data = prelim_tidy) #QW???
 boxplot(sun ~ individual, data = prelim_tidy)
-
+boxplot(amb_t ~ time_od, data = prelim_tidy)
+boxplot(amb_t ~ pos_beh, data = prelim_tidy)
 
 #coplot
 #effect of positional behavior on body temp given context
 coplot(therm_t ~ pos_beh | context, data=prelim_tidy)
 coplot(therm_t ~ pos_beh | hab_type, data=prelim_tidy)
+coplot(therm_t ~ pos_beh | amb_t, data=prelim_tidy)
 
 ## plot
 plot(prelim_tidy$sun, prelim_tidy$therm_t)
 plot(prelim_tidy$time, prelim_tidy$therm_t)
 plot(prelim_tidy$date, prelim_tidy$therm_t)
+plot(prelim_tidy$amb_t, prelim_tidy$therm_t) #trend, lower amb_t associated with lower therm_t & vice versa
 
 
 ################################################################
