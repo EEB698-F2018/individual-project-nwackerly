@@ -12,8 +12,8 @@ View(prelim_tidy)
 
 
 ## Change to factor and numeric
-factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
-numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual", "time_od")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
 prelim_tidy[factor_cols] <- lapply(prelim_tidy[factor_cols], as.factor)
 prelim_tidy[numeric_cols] <- lapply(prelim_tidy[numeric_cols], as.numeric)
 str(prelim_tidy)
