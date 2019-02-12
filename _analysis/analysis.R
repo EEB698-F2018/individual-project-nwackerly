@@ -236,7 +236,7 @@ plot(x = F2,
 abline(h = 0, lty = 2)
 
 boxplot(E2 ~ pos_beh, data=prelim_temp) 
-boxplot(E2 ~ time_od, data=prelim_temp)
+plot(E2 ~ amb_t, data=prelim_temp)
 plot(x=prelim_temp$sun, y=E2)
 boxplot(E2 ~ hab_type, data=prelim_temp)
 plot(x=prelim_temp$date, y=E2)
@@ -279,7 +279,7 @@ prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St","Ly", "Sq",
 
 ###change to factor & numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
-numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
 
 prelim_temp3[factor_cols] <- lapply(prelim_temp3[factor_cols], as.factor)
 
@@ -289,13 +289,13 @@ str(prelim_temp3)
 
 ###check model minus outliers
 ##model 11 with outliers
-therm_mod11 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+therm_mod11 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                       (1|individual), data = prelim_temp)
 summary(therm_mod11)
 confint(therm_mod11)
 
 ##model minus outliers
-mod_2 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type + 
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
 summary(mod_2)
 confint(mod_2)
