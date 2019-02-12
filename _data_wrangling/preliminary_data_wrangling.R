@@ -10,7 +10,7 @@ library(readr)
 library(lubridate)
 
 #read in preliminary data
-preliminary_data <- read_csv("_data/preliminary_data.csv")
+preliminary_data <- read_csv("_data/raw/preliminary_data.csv")
 View(preliminary_data)
 
 
