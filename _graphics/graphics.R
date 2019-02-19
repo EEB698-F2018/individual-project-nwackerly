@@ -47,7 +47,7 @@ prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", 
 
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
-numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
 
 prelim_temp[factor_cols] <- lapply(prelim_temp[factor_cols], as.factor)
 
@@ -115,10 +115,13 @@ ggplot(prelim_temp, aes(individual))+
 ggplot(prelim_temp, aes(sun))+
   geom_histogram()
 
+ggplot(prelim_temp, aes(amb_t))+
+  geom_histogram()
+
 ###model plotting
 library(broom)
 
-m1 <- lmer(therm_t ~ pos_beh + time_od + sun + date + hab_type +
+m1 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type +
        (1|individual), data = prelim_temp)
 summary(m1)
 confint(m1)
@@ -180,8 +183,8 @@ prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", 
 ##attempting to follow tutorial but got too confused....
 preddata <- with(prelim_temp, expand.grid(pos_beh = levels(pos_beh), time_od = levels(time_od), sun = c(0,50,100), date = c("2018-06-28", "2018-06-06", "2018-07-16"), hab_type = c("WD", "WG", "GL"), individual = c("DW","JM", "LT")))
 
-factor_cols <- c("pos_beh", "time_od", "hab_type", "individual")
-numeric_cols <- c("sun")
+factor_cols <- c("pos_beh", "hab_type", "individual")
+numeric_cols <- c("sun", "amb_t")
 
 preddata[factor_cols] <- lapply(preddata[factor_cols], as.factor)
 preddata[numeric_cols] <- lapply(preddata[numeric_cols], as.numeric)
@@ -191,7 +194,7 @@ preddata$date <- as.Date(preddata$date)
 str(preddata)
 
 ########
-mm <- model.matrix(~pos_beh + time_od + sun + date + hab_type, data=preddata)
+mm <- model.matrix(~pos_beh + amb_t + sun + date + hab_type, data=preddata)
 
 ###won't work because I don't have 2 or more levels per factor
 
