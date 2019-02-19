@@ -1,5 +1,4 @@
 # load libraries
-library(tidyverse) 
 library(readr) 
 library(lubridate)
 library(magrittr)
@@ -8,6 +7,7 @@ library(car)
 library(emmeans)
 library(lme4)
 library(ggthemes)
+library(tidyverse) 
 library(plyr) #HSR note- if you need plyr, need to load it before tidyverse. But dplyr in tidyverse does everything plyr can do and more, so shoudln't need plyr. 
 
 ##read in data
