@@ -38,6 +38,62 @@ context_2 <- na.omit(prelim_tidy$context)
 
 summary(context_2)
 
+##filter by date
+June_6 <- prelim_tidy %>%
+  filter(date == "2018-06-06")
+June_6 <- na.omit(June_6$therm_t)
+View(June_6)
+
+June_8 <- prelim_tidy %>%
+  filter(date == "2018-06-08")
+June_8 <- na.omit(June_8$therm_t)
+View(June_8)
+
+June_12 <- prelim_tidy %>%
+  filter(date == "2018-06-12")
+June_12 <- na.omit(June_12$therm_t)
+View(June_12)
+
+June_14 <- prelim_tidy %>%
+  filter(date == "2018-06-14")
+June_14 <- na.omit(June_14$therm_t)
+View(June_14)
+
+June_17 <- prelim_tidy %>%
+  filter(date == "2018-06-17")
+June_17 <- na.omit(June_17$therm_t)
+View(June_17)
+
+June_19 <- prelim_tidy %>%
+  filter(date == "2018-06-19")
+June_19 <- na.omit(June_19$therm_t)
+View(June_19)
+
+June_21 <- prelim_tidy %>%
+  filter(date == "2018-06-21")
+June_21 <- na.omit(June_21$therm_t)
+View(June_21)
+
+June_23 <- prelim_tidy %>%
+  filter(date == "2018-06-23")
+June_23 <- na.omit(June_23$therm_t)
+View(June_23)
+
+June_21 <- prelim_tidy %>%
+  filter(date == "2018-06-21")
+June_21 <- na.omit(June_21$therm_t)
+View(June_21)
+
+June_21 <- prelim_tidy %>%
+  filter(date == "2018-06-21")
+June_21 <- na.omit(June_21$therm_t)
+View(June_21)
+
+June_21 <- prelim_tidy %>%
+  filter(date == "2018-06-21")
+June_21 <- na.omit(June_21$therm_t)
+View(June_21)
+
 ## filter by bipedalism 
 data_A_bipedal <- prelim_tidy %>%
   filter(pos_beh == "Abp")
