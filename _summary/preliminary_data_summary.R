@@ -135,11 +135,28 @@ July_16 <- prelim_tidy %>%
 July_16 <- na.omit(July_16$therm_t)
 View(July_16) ##44
 
-#creating a table of these data
-date <- c(2018-06-06, 2018-06-08, 2018-06-12, 2018-06-14, 2018-06-17, 2018-06-19, 
-          2018-06-21, 2018-06-23, 2018-06-26, 2018-06-28, 2018-07-01, 2018-07-03, 
-          2018-07-05, 2018-07-08, 2018-07-10, 2018-07-12, 2018-07-14, 2018-07-16)
-therm_num <- c(60, 54, 49, 27, 40, 67, 35, 40, 28, 64, 23, 39, 39, 49, 36, 48, 65, 44)
+#creating a matrix of these data
+date_Y <- c("2018-06-06", "2018-06-08", "2018-06-12", "2018-06-14", "2018-06-17", "2018-06-19", 
+          "2018-06-21", "2018-06-23", "2018-06-26", "2018-06-28", "2018-07-01", "2018-07-03", 
+          "2018-07-05", "2018-07-08", "2018-07-10", "2018-07-12", "2018-07-14", "2018-07-16")
+therm_num_X <- c(60, 54, 49, 27, 40, 67, 35, 40, 28, 64, 23, 39, 39, 49, 36, 48, 65, 44)
+
+#check length of vectors
+length(date_Y); length(therm_num_X)
+
+#view each vector
+date_Y
+therm_num_X
+
+#bind as a matrix
+d_matrix <- cbind(date_Y, therm_num_X)
+d_matrix
+
+#get results
+min(therm_num_X) #23
+mean(therm_num_X) #44.83
+max(therm_num_X) #67
+median(therm_num_X) #42
 
 ## filter by bipedalism 
 data_A_bipedal <- prelim_tidy %>%
