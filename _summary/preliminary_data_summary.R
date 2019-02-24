@@ -57,7 +57,7 @@ View(June_12) ##49
 June_14 <- prelim_tidy %>%
   filter(date == "2018-06-14")
 June_14 <- na.omit(June_14$therm_t)
-View(June_14) ##27
+View(June_14) ##27, rainy day
 
 June_17 <- prelim_tidy %>%
   filter(date == "2018-06-17")
@@ -82,7 +82,7 @@ View(June_23) ##40
 June_26 <- prelim_tidy %>%
   filter(date == "2018-06-26")
 June_26 <- na.omit(June_26$therm_t)
-View(June_26) ##28
+View(June_26) ##28, rested most of the day; it was a hot one!
 
 June_28 <- prelim_tidy %>%
   filter(date == "2018-06-28")
@@ -92,7 +92,7 @@ View(June_28) ##64
 July_1 <- prelim_tidy %>%
   filter(date == "2018-07-01")
 July_1 <- na.omit(July_1$therm_t)
-View(July_1) ##23
+View(July_1) ##23, female (LU) with large swelling, males were all over her all day; hard to get images
 
 July_3 <- prelim_tidy %>%
   filter(date == "2018-07-03")
