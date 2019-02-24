@@ -42,57 +42,98 @@ summary(context_2)
 June_6 <- prelim_tidy %>%
   filter(date == "2018-06-06")
 June_6 <- na.omit(June_6$therm_t)
-View(June_6)
+View(June_6) ##60 - number of thermo-images taken on this date
 
 June_8 <- prelim_tidy %>%
   filter(date == "2018-06-08")
 June_8 <- na.omit(June_8$therm_t)
-View(June_8)
+View(June_8) ##54
 
 June_12 <- prelim_tidy %>%
   filter(date == "2018-06-12")
 June_12 <- na.omit(June_12$therm_t)
-View(June_12)
+View(June_12) ##49
 
 June_14 <- prelim_tidy %>%
   filter(date == "2018-06-14")
 June_14 <- na.omit(June_14$therm_t)
-View(June_14)
+View(June_14) ##27
 
 June_17 <- prelim_tidy %>%
   filter(date == "2018-06-17")
 June_17 <- na.omit(June_17$therm_t)
-View(June_17)
+View(June_17) ##40
 
 June_19 <- prelim_tidy %>%
   filter(date == "2018-06-19")
 June_19 <- na.omit(June_19$therm_t)
-View(June_19)
+View(June_19) ##67
 
 June_21 <- prelim_tidy %>%
   filter(date == "2018-06-21")
 June_21 <- na.omit(June_21$therm_t)
-View(June_21)
+View(June_21) ##35
 
 June_23 <- prelim_tidy %>%
   filter(date == "2018-06-23")
 June_23 <- na.omit(June_23$therm_t)
-View(June_23)
+View(June_23) ##40
 
-June_21 <- prelim_tidy %>%
-  filter(date == "2018-06-21")
-June_21 <- na.omit(June_21$therm_t)
-View(June_21)
+June_26 <- prelim_tidy %>%
+  filter(date == "2018-06-26")
+June_26 <- na.omit(June_26$therm_t)
+View(June_26) ##28
 
-June_21 <- prelim_tidy %>%
-  filter(date == "2018-06-21")
-June_21 <- na.omit(June_21$therm_t)
-View(June_21)
+June_28 <- prelim_tidy %>%
+  filter(date == "2018-06-28")
+June_28 <- na.omit(June_28$therm_t)
+View(June_28) ##64
 
-June_21 <- prelim_tidy %>%
-  filter(date == "2018-06-21")
-June_21 <- na.omit(June_21$therm_t)
-View(June_21)
+July_1 <- prelim_tidy %>%
+  filter(date == "2018-07-01")
+July_1 <- na.omit(July_1$therm_t)
+View(July_1) ##23
+
+July_3 <- prelim_tidy %>%
+  filter(date == "2018-07-03")
+July_3 <- na.omit(July_3$therm_t)
+View(July_3) ##39
+
+July_5 <- prelim_tidy %>%
+  filter(date == "2018-07-05")
+July_5 <- na.omit(July_5$therm_t)
+View(July_5) ##39
+
+July_7 <- prelim_tidy %>%
+  filter(date == "2018-07-07")
+July_7 <- na.omit(July_7$therm_t)
+View(July_7) ##zero -- day I forgot to put memory card in camera, so zero images taken
+##this day won't count in min/max analysis
+
+July_8 <- prelim_tidy %>%
+  filter(date == "2018-07-08")
+July_8 <- na.omit(July_8$therm_t)
+View(July_8) ##49
+
+July_10 <- prelim_tidy %>%
+  filter(date == "2018-07-10")
+July_10 <- na.omit(July_10$therm_t)
+View(July_10) ##36
+
+July_12 <- prelim_tidy %>%
+  filter(date == "2018-07-12")
+July_12 <- na.omit(July_12$therm_t)
+View(July_12) ##48
+
+July_14 <- prelim_tidy %>%
+  filter(date == "2018-07-14")
+July_14 <- na.omit(July_14$therm_t)
+View(July_14) ##65
+
+July_16 <- prelim_tidy %>%
+  filter(date == "2018-07-16")
+July_16 <- na.omit(July_16$therm_t)
+View(July_16) ##44
 
 ## filter by bipedalism 
 data_A_bipedal <- prelim_tidy %>%
