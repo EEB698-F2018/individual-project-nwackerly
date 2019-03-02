@@ -98,8 +98,8 @@ therm_mod6 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + context +
                    data = prelim_temp)
 
 ####compare interaction models
-AIC(therm_mod3, therm_mod4, therm_mod5, therm_mod6) ###lowest AIC is with no interaction (1423.646; DF: 20)
-                                               ###second lowest is time_od*sun (1437.358, DF: 21)
+AIC(therm_mod3, therm_mod4, therm_mod5, therm_mod6) ###lowest AIC is with no interaction (3244.383; DF: 20)
+                                               ###second lowest is time_od*sun (3259.170, DF: 21)
                                                ###continue forward with amb_t*sun & no interactions
 ###############################################################
 ##amb_t*sun models
@@ -123,8 +123,8 @@ therm_mod10 <- lmer(therm_t ~ pos_beh + amb_t + sun + date +
                      (1|individual) + amb_t*sun,
                    data = prelim_temp)
 ###Compare models
-AIC(therm_mod7, therm_mod8, therm_mod9, therm_mod10) ##model 7 and 10 are lowest (1430.600 & 1433.384, resp.)
-                                      ##model 9 isn't far off, though, (1436.000) 
+AIC(therm_mod7, therm_mod8, therm_mod9, therm_mod10) ##model 7 and 10 are lowest (3251.671 & 3246.007, resp.)
+                                      ##model 8 isn't far off, though, (3252.598) 
                                  ##and it may be important to include context
 
 ###############################################################################
@@ -146,7 +146,7 @@ therm_mod14 <- lmer(therm_t ~ pos_beh + amb_t + sun + date +
                       (1|individual), data = prelim_temp)
 
 ###Compare models
-AIC(therm_mod11, therm_mod12, therm_mod13, therm_mod14) ##models 11 and 14 are lowest (1416.906 & 1419.632, resp.)
+AIC(therm_mod11, therm_mod12, therm_mod13, therm_mod14) ##models 11 and 14 are lowest (3236.897 & 3231.295, resp.)
 
 ###compare between types of models
 AIC(therm_mod4, therm_mod6, therm_mod7, therm_mod10, therm_mod8, therm_mod11, therm_mod14)
@@ -221,7 +221,7 @@ abline(h = 0, lty = 2)
 
 ### residual plots all seem relatively normal; cloud around horizontal axis, indicating a good fit
 ###################################################################
-##Model 11 - includes pos_beh, time_od, sun, date, hab_type and (1|individual) 
+##Model 11 - includes pos_beh, amb_t, sun, date, hab_type and (1|individual) 
 E2 <- resid(therm_mod11, type = "pearson")
 
 #plot fitted vs residuals
