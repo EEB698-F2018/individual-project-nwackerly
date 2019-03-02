@@ -1,8 +1,8 @@
 
 ### instal packages (if needed) ##
-install.packages("tidyverse")
-install.packages("lubridate")
-install.packages("readr")
+#install.packages("tidyverse")
+#install.packages("lubridate")
+#install.packages("readr")
 
 # load libraries
 library(tidyverse)
@@ -10,7 +10,7 @@ library(readr)
 library(lubridate)
 
 #read in preliminary data
-preliminary_data <- read_csv("_data/raw/preliminary_data.csv")
+preliminary_data <- read_csv("_data/_raw/preliminary_data.csv")
 View(preliminary_data)
 
 
@@ -48,6 +48,7 @@ preliminary_data$sun[preliminary_data$sun == "Os"] <- "NA"
 preliminary_data$therm_t[preliminary_data$therm_t == "Os"] <- "NA"
 preliminary_data$t_lo[preliminary_data$t_lo == "Os"] <- "NA"
 preliminary_data$t_hi[preliminary_data$t_hi == "Os"] <- "NA"
+preliminary_data$amb_t[preliminary_data$amb_t == "Os"] <- "NA"
 preliminary_data
 
 
