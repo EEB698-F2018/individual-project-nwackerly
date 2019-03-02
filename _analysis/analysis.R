@@ -333,3 +333,12 @@ abline(h = 0, lty = 2)
 #HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file. 
 library(emmeans)
 emmeans(mod_2, list(pairwise ~ pos_beh), adjust = "tukey")
+
+
+##change levels and run mod_2 with QS as the outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2)
+confint(mod_2)
