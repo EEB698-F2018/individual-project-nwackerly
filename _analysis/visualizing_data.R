@@ -88,6 +88,7 @@ boxplot(sun ~ individual, data = prelim_tidy)
 boxplot(amb_t ~ time_od, data = prelim_tidy)
 boxplot(amb_t ~ pos_beh, data = prelim_tidy)
 
+
 #coplot
 #effect of positional behavior on body temp given context
 coplot(therm_t ~ pos_beh | context, data=prelim_tidy)
