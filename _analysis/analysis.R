@@ -23,7 +23,7 @@ View(prelim_temp)
 
 #Combine positional behaviors into smaller categories
 # suspensory = Cb, Br & QM
-#Vertical climb and cling together
+#Vertical climb and cling together, BpS & BpW together, Squat & Sit together
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "QM"] <- "Su"
@@ -31,6 +31,9 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
+
+
 
 ############
 ##re-order levels
@@ -271,6 +274,7 @@ prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Vci"] <- "VC"
 prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Abp"] <- "Bp"
 prelim_temp3$pos_beh[prelim_temp3$pos_beh == "BpS"] <- "Bp"
 prelim_temp3$pos_beh[prelim_temp3$pos_beh == "BpW"] <- "Bp"
+prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Sq"] <- "St"
 
 ############
 ##re-order levels
@@ -349,7 +353,7 @@ prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("QW", "Ly", "Sq"
 mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
 summary(mod_2) 
-confint(mod_2)
+confint(mod_2) #Bp is not signif
 
 ##change levels with St as outgroup
 prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St", "Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
@@ -365,4 +369,12 @@ prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Bp", "Ly", "Sq"
 mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
 summary(mod_2) 
-confint(mod_2)
+confint(mod_2) ##QW is not signif.
+
+##check counts again to see differences in QW and QS
+ggplot(prelim_temp3, aes(pos_beh))+
+  geom_bar(stat="count") + 
+  labs(x="Positional Behavior", y="Count") +
+  theme_classic() 
+              ###there's a lot more QW than QS, but still at least 50 QS
+
