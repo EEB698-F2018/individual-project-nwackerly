@@ -342,3 +342,27 @@ mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type +
                 (1|individual), data = prelim_temp3)
 summary(mod_2) 
 confint(mod_2) ##bipedalism is significant
+
+##change levels with QW as outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("QW", "Ly", "Sq", "St", "QS", "Bp", "Su", "VC"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
+
+##change levels with St as outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St", "Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
+
+##change levels with Bp as the outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Bp", "Ly", "Sq", "St", "QW", "QS", "Su", "VC"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
