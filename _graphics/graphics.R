@@ -62,7 +62,7 @@ str(prelim_temp)
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
 
 pb_raw_plot <- ggplot(prelim_temp, aes(pos_beh, therm_t)) +
-                  geom_boxplot(fill = "white", colour = "blue", size = 1) + 
+                  geom_boxplot(fill = "white", colour = "mediumpurple4", size = 1) + 
                   ggtitle("Effect of Positional Behavior on Body Temperature (Raw)") +
                   scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", 
                                         "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", 
@@ -95,7 +95,7 @@ ggplot(prelim_temp, aes(time_od, therm_t)) +
 
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  geom_bar(stat="count", fill = "mediumpurple4", colour = "mediumpurple4") + 
   ggtitle("Counts of Positional Behaviors") +
   scale_x_discrete(name = "Positional Behavior", 
                    labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
