@@ -385,4 +385,4 @@ prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Ly", "Bp", "St"
 mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
 summary(mod_2) 
-confint(mod_2)
+confint(mod_2)##all significant
