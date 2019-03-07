@@ -8,7 +8,7 @@ library(emmeans)
 library(lme4)
 library(ggthemes)
 library(tidyverse) 
-library(plyr) #HSR note- if you need plyr, need to load it before tidyverse. But dplyr in tidyverse does everything plyr can do and more, so shoudln't need plyr. 
+#library(plyr) #HSR note- if you need plyr, need to load it before tidyverse. But dplyr in tidyverse does everything plyr can do and more, so shoudln't need plyr. 
 
 ##read in data
 prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
@@ -30,6 +30,8 @@ nrow(prelim_temp) #now 804 rows
 
 #Combine positional behaviors into smaller categories
 # suspensory = Cb, Br & QM
+#bipedalism = BpS, BpW & Abp
+#Sit = St & Sq
 #Vertical climb and cling together
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Su"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Su"
@@ -38,7 +40,7 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
 prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
-
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
 
 ############
 ##re-order levels
@@ -93,9 +95,14 @@ ggplot(prelim_temp, aes(time_od, therm_t)) +
 
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count") + 
-  labs(x="Positional Behavior", y="Count") +
-  theme_classic()  
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Counts of Positional Behaviors") +
+  scale_x_discrete(name = "Positional Behavior", 
+                   labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
+                              "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
+  scale_y_continuous(name = "Counts") +
+  theme_classic()
+
 
 ggplot(prelim_temp, aes(hab_type))+
   geom_bar(stat="count") + 
