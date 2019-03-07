@@ -95,13 +95,13 @@ ggplot(prelim_temp, aes(time_od, therm_t)) +
 
 ##counts
 ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count", fill = "mediumpurple4", colour = "mediumpurple4") + 
-  ggtitle("Counts of Positional Behaviors") +
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Counts of Positional Behavior") +
   scale_x_discrete(name = "Positional Behavior", 
                    labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
                               "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
   scale_y_continuous(name = "Counts") +
-  theme_classic()
+  theme_minimal()
 
 
 ggplot(prelim_temp, aes(hab_type))+

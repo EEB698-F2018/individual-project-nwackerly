@@ -48,7 +48,7 @@ prelim_temp[factor_cols] <- lapply(prelim_temp[factor_cols], as.factor)
 
 prelim_temp[numeric_cols] <- lapply(prelim_temp[numeric_cols], as.numeric)
 
-
+#######################################
 ###
 hist(prelim_temp$therm_t)
 dotchart(prelim_temp$therm_t)
@@ -67,6 +67,7 @@ with(prelim_temp, table(pos_beh, hab_type))
 with(prelim_temp, table(pos_beh, time_od))
 with(prelim_temp, table(pos_beh, hab_type, time_od))
 
+#######################################################
 ## choosing models
 ##GLMER
 
@@ -256,7 +257,7 @@ confint(therm_mod11) ##maybe I don't need habitat in there because none of the l
 summary(therm_mod14)
 confint(therm_mod14)
 
-
+###############################################
 ##### OMIT OUTLIERS ###
 prelim_temp2 <- prelim_temp
 prelim_temp2$therm_t[prelim_temp2$therm_t >= 42] <- NA
@@ -279,7 +280,7 @@ prelim_temp3$pos_beh[prelim_temp3$pos_beh == "Sq"] <- "St"
 ############
 ##re-order levels
 prelim_temp3$time_od <- factor(prelim_temp3$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St","Ly", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Ly", "St", "QS", "QW", "Bp", "Su", "VC"))
 
 ###change to factor & numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
@@ -305,7 +306,7 @@ summary(mod_2)
 confint(mod_2)
 
 
-##plotting residuals
+######## plotting residuals ##################
 ##model 11
 E2 <- resid(therm_mod11, type = "pearson")
 
@@ -334,13 +335,13 @@ plot(x = F5,
      cex.lab = 1.5)
 abline(h = 0, lty = 2)
 
-#HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file. 
+###### HSR: post-hoc test to compare between levels of position behavior. Will want to do this in the analysis file not graphics file.#### 
 library(emmeans)
 emmeans(mod_2, list(pairwise ~ pos_beh), adjust = "tukey")
 
 
-##change levels and run mod_2 with QS as the outgroup
-prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
+####change levels and run mod_2 with QS as the outgroup #####
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("QS", "Ly", "St", "QW", "Bp", "Su", "VC"))
 
 mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp3)
