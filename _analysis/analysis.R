@@ -379,3 +379,10 @@ ggplot(prelim_temp3, aes(pos_beh))+
   theme_classic() 
               ###there's a lot more QW than QS, but still at least 50 QS
 
+##change levels with Ly as the outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Ly", "Bp", "St", "QW", "QS", "Su", "VC"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
