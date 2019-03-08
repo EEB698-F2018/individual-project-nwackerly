@@ -94,15 +94,27 @@ ggplot(prelim_temp, aes(time_od, therm_t)) +
   theme_classic()
 
 ##counts
-ggplot(prelim_temp, aes(pos_beh))+
-  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
-  ggtitle("Counts of Positional Behavior") +
-  scale_x_discrete(name = "Positional Behavior", 
-                   labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
+counts_pos_beh <- ggplot(prelim_temp, aes(pos_beh))+
+                    geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+                    ggtitle("Counts of Positional Behavior") +
+                    scale_x_discrete(name = "Positional Behavior", 
+                    labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
                               "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
-  scale_y_continuous(name = "Counts") +
-  theme_minimal()
+                    scale_y_continuous(name = "Counts") +
+                    theme_minimal()+
+                    theme(axis.text.x=element_text(size=15),
+                    axis.text.y=element_text(size=15),
+                    axis.title.y=element_text(size=15, face="bold"),
+                    axis.title.x=element_text(size=15, face="bold"),
+                    plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+counts_pos_beh
 
+##save plot
+ggsave("counts_pos_beh.pdf", width=10, height=6, units="in")
+
+ggsave("counts_pos_beh.png", width=10, height=6, units="in")
+
+#####more count plots #####
 
 ggplot(prelim_temp, aes(hab_type))+
   geom_bar(stat="count") + 
