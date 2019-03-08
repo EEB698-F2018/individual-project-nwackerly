@@ -145,9 +145,25 @@ m1 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type +
 summary(m1)
 confint(m1)
 
-#ggplot(fortify(m1), aes(pos_beh, therm_t)) +
-  #stat_summary(fun.data=mean_se, geom="pointrange") +
-  #stat_summary(aes(y=.fitted), fun.y=mean, geom="line")
+##plotting model?
+fitted_pb <- ggplot(fortify(m1), aes(pos_beh, therm_t)) +
+              stat_summary(fun.data=mean_se, geom="pointrange") +
+              stat_summary(aes(y=.fitted), fun.y=mean, geom="line")+
+              scale_x_discrete(name = "Positional Behavior", 
+                   labels = c("Lie", "Sit", "Quad. Stand", "Quad. Walk", 
+                              "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
+              scale_y_continuous(name = "Body Temperature") +
+              theme_minimal()+
+              theme(axis.text.x=element_text(size=14),
+                axis.text.y=element_text(size=14),
+                axis.title.y=element_text(size=14, face="bold"),
+                axis.title.x=element_text(size=14, face="bold"))
+fitted_pb
+
+##save plot
+ggsave("fitted_pb.pdf", width=10, height=6, units="in")
+
+ggsave("fitted_pb.png", width=10, height=6, units="in")
 
 #predict(m1, preddata)
 
@@ -158,6 +174,7 @@ confint(m1)
 ggplot(prelim_temp, aes(pos_beh, therm_t)) + 
   geom_point(size = 3) +
   geom_point(aes(y=predict(m1)), size = 1)
+
 
 #change levels for the plot
 prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
