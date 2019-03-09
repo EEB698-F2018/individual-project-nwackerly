@@ -102,10 +102,10 @@ counts_pos_beh <- ggplot(prelim_temp, aes(pos_beh))+
                               "Bipedal", "Suspensory", "Vert. Climb/Cling")) +
                     scale_y_continuous(name = "Counts") +
                     theme_minimal()+
-                    theme(axis.text.x=element_text(size=15),
-                    axis.text.y=element_text(size=15),
-                    axis.title.y=element_text(size=15, face="bold"),
-                    axis.title.x=element_text(size=15, face="bold"),
+                    theme(axis.text.x=element_text(size=14),
+                    axis.text.y=element_text(size=14),
+                    axis.title.y=element_text(size=14, face="bold"),
+                    axis.title.x=element_text(size=14, face="bold"),
                     plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 counts_pos_beh
 
