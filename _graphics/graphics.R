@@ -1,5 +1,6 @@
 # load libraries
-library(readr) 
+library(scales)
+library(readr)
 library(lubridate)
 library(magrittr)
 library(ggplot2)
@@ -68,7 +69,13 @@ pb_raw_plot <- ggplot(prelim_temp, aes(pos_beh, therm_t)) +
                                         "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", 
                                         "Suspensory", "Vert. Climb/Cling")) +
                   scale_y_continuous(name = "Body Temperature") +
-                  theme_classic()
+                  theme_classic()+
+                  theme(axis.text.x=element_text(size=14),
+                  axis.text.y=element_text(size=14),
+                  axis.title.y=element_text(size=14, face="bold"),
+                  axis.title.x=element_text(size=14, face="bold"),
+                  plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+  
 pb_raw_plot
 
 ##save plot
@@ -137,11 +144,25 @@ ggplot(prelim_temp, aes(sun))+
 ggplot(prelim_temp, aes(amb_t))+
   geom_histogram()
 
-ggplot(prelim_temp, aes(therm_t))+
-  geom_histogram(aes(y = (..count..)/sum(..count..)))+
-  scale_y_continuous(labels = percent)
+freq_therm_t <- ggplot(prelim_temp, aes(therm_t))+
+                  geom_histogram(aes(y = (..count..)/sum(..count..)), bins = 10, 
+                      fill = "mediumpurple1", colour = "mediumpurple1")+
+                  ggtitle("Frequency of Chimpanzee Body Temperature") +
+                  scale_y_continuous(name = "Frequency", labels = percent)+
+                  scale_x_continuous(name = "Chimpanzee Body Temperature")+
+                  theme_minimal()+
+                  theme(axis.text.x=element_text(size=14),
+                      axis.text.y=element_text(size=14),
+                      axis.title.y=element_text(size=14, face="bold"),
+                      axis.title.x=element_text(size=14, face="bold"),
+                      plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-hist(prelim_temp$therm_t)
+freq_therm_t
+
+##save freq_therm_t plot
+ggsave("freq_therm_t.pdf", width=10, height=6, units="in")
+
+ggsave("freq_therm_t.png", width=10, height=6, units="in")
 
 ###model plotting
 library(broom)
