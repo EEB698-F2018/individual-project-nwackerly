@@ -38,7 +38,7 @@ context_2 <- na.omit(prelim_tidy$context)
 
 summary(context_2)
 
-##filter by date
+#####filter by date ######
 June_6 <- prelim_tidy %>%
   filter(date == "2018-06-06")
 June_6 <- na.omit(June_6$therm_t)
@@ -158,7 +158,7 @@ mean(therm_num_X) #44.83
 max(therm_num_X) #67
 median(therm_num_X) #42
 
-## filter by bipedalism 
+##### filter by bipedalism ######
 data_A_bipedal <- prelim_tidy %>%
   filter(pos_beh == "Abp")
 
@@ -198,7 +198,7 @@ data_bipedal_w_Tv <- prelim_tidy %>%
 data_bipedal_w_So <- prelim_tidy %>%
   filter(pos_beh == "BpW", context == "So")
 
-### Join bipedal data
+### Join bipedal data #####
 join_AS_bipedal_data <- full_join(data_A_bipedal, data_bipedal_S, c("date", "individual", "time", "pos_beh", "context", "substrate", "hab_type", "sun", "therm_t", "t_lo", "t_hi"))
 View(join_AS_bipedal_data)
 
@@ -208,7 +208,7 @@ View(full_join_bipedal)
 write.csv(full_join_bipedal, "C:/Users/nw185_000/Documents/Iowa/Dissertation/Data/individual-project-nwackerly/_summary/bipedal_table.csv", row.names=F)
 ##################################################################
 
-## Summarize bipedal data
+## Summarize bipedal data #####
 summary(data_A_bipedal)
   summary(data_A_bipedal_Fo)  ### assisted bipedalism by context (Fo = forage; So = Social; Tv = travel)
   summary(data_A_bipedal_So)
@@ -224,7 +224,7 @@ summary(data_bipedal_w)
 summary(full_join_bipedal)
 
 
-## summary of bipedalism by individual
+## summary of bipedalism by individual #####
 summary(data_A_bipedal$individual)
 summary(data_bipedal_S$individual)
 summary(data_bipedal_w$individual)
@@ -232,7 +232,7 @@ summary(full_join_bipedal$individual)
 
 ################################################################################################
 
-### Separate data by individual
+### Separate data by individual #####
 ## Bandit
 data_bandit <- prelim_tidy %>%
   filter(individual == "BN")
@@ -297,3 +297,73 @@ summary(data_luthor$therm_t)
 summary(data_mike$therm_t)
 summary(data_siberut$therm_t)
 
+####################################################################
+#Omit any missing values:
+summary(is.na(prelim_tidy)) #looks like missing lots of therm data
+
+prelim_temp<-na.omit(prelim_tidy)
+View(prelim_temp)
+nrow(prelim_temp) #810 rows; most rows were removed bc therm data missing. 
+
+prelim_temp$therm_t[prelim_temp$therm_t >= 42] <- NA #remove therm values >42 because likely a temp sensor problem? 6 rows removed.  
+
+prelim_temp<-na.omit(prelim_temp) #remove those rows with NA's
+View(prelim_temp)
+nrow(prelim_temp) #now 804 rows
+
+#Combine positional behaviors into smaller categories
+# suspensory = Cb, Br & QM
+#bipedalism = BpS, BpW & Abp
+#Sit = St & Sq
+#Vertical climb and cling together
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Cb"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Br"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "QM"] <- "Su"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Vci"] <- "VC"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Abp"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "BpS"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "BpW"] <- "Bp"
+prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
+
+############
+##re-order levels
+prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
+
+## Change to factor and numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
+
+prelim_temp[factor_cols] <- lapply(prelim_temp[factor_cols], as.factor)
+
+prelim_temp[numeric_cols] <- lapply(prelim_temp[numeric_cols], as.numeric)
+
+str(prelim_temp)
+
+##########################################################
+## summary stats ######
+summary(prelim_temp) 
+summary(prelim_temp$pos_beh) ## QS: 48, QW: 167, Bp:160, St:326, Ly:68
+summary(prelim_temp$hab_type) ##hab_type: BM: 5, BMWD: 56, GA: 66, GL: 42, WD: 635
+
+#thermo-temp summary stats
+meantherm_t <- prelim_temp %>%
+  summarize(mean(therm_t))
+
+meantherm_t ##mean: 34.1
+summary(prelim_temp$therm_t) ##mean: 34.14, median: 34; Max: 41.6, Min: 26.1
+
+max(prelim_temp$therm_t) - min(prelim_temp$therm_t)  ##Range: 15.5; measure of how far apart the entire data spreads in value
+IQR(prelim_temp$therm_t) ###interquartile range: 3.7; measure of how far apart the middle portion of data spreads in value
+
+##ambient temp summary stats
+meanamb_t <- prelim_temp %>%
+  summarize(mean(amb_t))
+
+meanamb_t ##mean: 29.8
+summary(prelim_temp$amb_t) #29.81
+
+max(prelim_temp$amb_t) - min(prelim_temp$amb_t)  ##Range: 17.1
+IQR(prelim_temp$amb_t) ##5.9
+
+#################################################################3

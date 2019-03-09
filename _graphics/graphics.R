@@ -137,6 +137,11 @@ ggplot(prelim_temp, aes(sun))+
 ggplot(prelim_temp, aes(amb_t))+
   geom_histogram()
 
+ggplot(prelim_temp, aes(therm_t))+
+  geom_histogram()
+
+hist(prelim_temp$therm_t)
+
 ###model plotting
 library(broom)
 
