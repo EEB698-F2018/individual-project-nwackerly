@@ -361,7 +361,7 @@ meanamb_t <- prelim_temp %>%
   summarize(mean(amb_t))
 
 meanamb_t ##mean: 29.8
-summary(prelim_temp$amb_t) #29.81
+summary(prelim_temp$amb_t) #mean: 29.81, median: 30.10; Max: 36.5, Min: 19.4
 
 max(prelim_temp$amb_t) - min(prelim_temp$amb_t)  ##Range: 17.1
 IQR(prelim_temp$amb_t) ##5.9

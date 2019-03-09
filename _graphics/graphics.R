@@ -138,7 +138,8 @@ ggplot(prelim_temp, aes(amb_t))+
   geom_histogram()
 
 ggplot(prelim_temp, aes(therm_t))+
-  geom_histogram()
+  geom_histogram(aes(y = (..count..)/sum(..count..)))+
+  scale_y_continuous(labels = percent)
 
 hist(prelim_temp$therm_t)
 
