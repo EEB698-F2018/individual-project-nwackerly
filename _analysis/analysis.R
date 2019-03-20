@@ -75,6 +75,7 @@ ggplot(prelim_temp, aes(pos_beh, therm_t, color=time_od))+
 with(prelim_temp, table(pos_beh, hab_type))
 with(prelim_temp, table(pos_beh, time_od))
 with(prelim_temp, table(pos_beh, hab_type, time_od))
+with(prelim_temp, table(individual, pos_beh))
 
 #######################################################
 ## choosing models
