@@ -1,3 +1,12 @@
+##install packages
+#install.packages("readr")
+#install.packages("lubridate")
+#install.packages("magrittr")
+#install.packages("ggplot2")
+#install.packages("car")
+#install.packages("emmeans")
+#install.packages("lme4")
+
 # load libraries
 library(tidyverse) 
 library(readr) 
