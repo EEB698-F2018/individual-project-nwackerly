@@ -274,7 +274,7 @@ pframe2 <- data.frame(
 )
 
 
-##habitat plot
+#### habitat type plot ####
 ###combine bamboo and bamboo woodland
 prelim_temp$hab_type[prelim_temp$hab_type == "BMWD"] <- "BM"
 
@@ -286,7 +286,7 @@ prelim_temp$hab_type <- factor(prelim_temp$hab_type, levels = c("WD", "GL", "GA"
 counts_hab_type <- ggplot(prelim_temp, aes(hab_type))+
   geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
   ggtitle("Counts of Habitat Type") +
-  scale_x_discrete(name = "Habitat Tpe", 
+  scale_x_discrete(name = "Habitat Type", 
                    labels = c("Woodland", "Grassland", "Gallery Forest", "Bamboo Woodland")) +
   scale_y_continuous(name = "Counts") +
   theme_minimal()+
