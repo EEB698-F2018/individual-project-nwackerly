@@ -46,7 +46,7 @@ prelim_temp$pos_beh[prelim_temp$pos_beh == "Sq"] <- "St"
 ############
 ##re-order levels
 prelim_temp$time_od <- factor(prelim_temp$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "Sq", "St", "QW", "Bp", "Su", "VC"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("QS", "Ly", "St", "QW", "Bp", "Su", "VC"))
 
 ## Change to factor and numeric
 factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
@@ -60,13 +60,13 @@ str(prelim_temp)
 
 ##plotting
 ## Change levels for the plot 
-prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "Sq", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly","St", "QS", "QW", "Bp", "Su", "VC"))
 
 pb_raw_plot <- ggplot(prelim_temp, aes(pos_beh, therm_t)) +
                   geom_boxplot(fill = "white", colour = "mediumpurple4", size = 1) + 
                   ggtitle("Effect of Positional Behavior on Body Temperature (Raw)") +
                   scale_x_discrete(name = "Positional Behavior", labels = c("Lie", "Sit", 
-                                        "Squat", "Quad. Stand", "Quad. Walk", "Bipedal", 
+                                        "Quad. Stand", "Quad. Walk", "Bipedal", 
                                         "Suspensory", "Vert. Climb/Cling")) +
                   scale_y_continuous(name = "Body Temperature") +
                   theme_classic()+
