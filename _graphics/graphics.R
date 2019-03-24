@@ -273,3 +273,33 @@ pframe2 <- data.frame(
   , thi = pframe2$eta+2*sqrt(tvar1)
 )
 
+
+##habitat plot
+###combine bamboo and bamboo woodland
+prelim_temp$hab_type[prelim_temp$hab_type == "BMWD"] <- "BM"
+
+#reorder levels
+prelim_temp$hab_type <- factor(prelim_temp$hab_type, levels = c("WD", "GL", "GA", "BM"))
+
+
+#plot
+counts_hab_type <- ggplot(prelim_temp, aes(hab_type))+
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Counts of Habitat Type") +
+  scale_x_discrete(name = "Habitat Tpe", 
+                   labels = c("Woodland", "Grassland", "Gallery Forest", "Bamboo Woodland")) +
+  scale_y_continuous(name = "Counts") +
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+
+counts_hab_type
+
+##save plot
+ggsave("counts_hab_type.pdf", width=10, height=6, units="in")
+
+ggsave("counts_hab_type.png", width=10, height=6, units="in")
+
