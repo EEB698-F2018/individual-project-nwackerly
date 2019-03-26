@@ -787,3 +787,39 @@ mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type +
 summary(mod_2) 
 confint(mod_2)##all significant
 >>>>>>> 5e22a6a957f91e7f2f53870c00b61486eb4fb8d4
+
+
+######### change habitat type levels ###
+##change levels with Bp as the outgroup, & BMWD as outgroup
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("Bp", "Ly", "Sq", "St", "QW", "QS", "Su", "VC")) 
+
+prelim_temp3$hab_type <- factor(prelim_temp3$hab_type, levels = c("BMWD", "BM", "GA", "GL", "WD"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
+
+###GA as outgroup
+prelim_temp3$hab_type <- factor(prelim_temp3$hab_type, levels = c("GA", "BM", "BMWD", "GL", "WD"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
+
+##GL outgroup
+prelim_temp3$hab_type <- factor(prelim_temp3$hab_type, levels = c("GL","BMWD", "BM", "GA", "WD"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
+
+###WD Outgroup
+prelim_temp3$hab_type <- factor(prelim_temp3$hab_type, levels = c("WD","BMWD", "BM", "GA", "GL"))
+
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2) 
+confint(mod_2)
