@@ -94,7 +94,7 @@ summary(prelim_temp4$hab_type) ###WITH SHADE: 762; WITHOUT SHADE: 42
 
 ###plot habitat type with vs. without shade
 
-counts_hab_type <- ggplot(prelim_temp4, aes(hab_type))+
+counts_shaded <- ggplot(prelim_temp4, aes(hab_type))+
   geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
   ggtitle("Counts of Habitat Type") +
   scale_x_discrete(name = "Habitat Type", 
@@ -107,8 +107,12 @@ counts_hab_type <- ggplot(prelim_temp4, aes(hab_type))+
         axis.title.x=element_text(size=14, face="bold"),
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-counts_hab_type
+counts_shaded
 
+##save plot
+ggsave("counts_shaded.pdf", width=10, height=6, units="in")
+
+ggsave("counts_shaded.png", width=10, height=6, units="in")
 
 ###frequency of shaded vs. not
 
