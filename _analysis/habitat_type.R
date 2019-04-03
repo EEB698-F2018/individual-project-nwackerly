@@ -61,11 +61,12 @@ prelim_temp4 <- prelim_temp3
 View(prelim_temp4)
 
 #####combine habitat types
-prelim_temp4$hab_type[prelim_temp4$hab_type == "WD"] <- "WITH SHADE"
-prelim_temp4$hab_type[prelim_temp4$hab_type == "BMWD"] <- "WITH SHADE"
-prelim_temp4$hab_type[prelim_temp4$hab_type == "BM"] <- "WITH SHADE"
-prelim_temp4$hab_type[prelim_temp4$hab_type == "GA"] <- "WITH SHADE"
-prelim_temp4$hab_type[prelim_temp4$hab_type == "GL"] <- "WITHOUT SHADE"
+levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="WD"] <- "WITH SHADE"
+levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="BMWD"] <- "WITH SHADE"
+levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="BM"] <- "WITH SHADE"
+levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="GA"] <- "WITH SHADE"
+levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="GL"] <- "WITHOUT SHADE"
+
 
 ############
 ##re-order levels
@@ -88,3 +89,8 @@ mod_3 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type +
                 (1|individual), data = prelim_temp4)
 summary(mod_3)
 confint(mod_3)
+
+summary(prelim_temp4$hab_type) ###WITH SHADE: 762; WITHOUT SHADE: 42
+
+###plot habitat type with vs. without shade
+library(ggplot2)
