@@ -125,4 +125,4 @@ freq_hab_type <- ggplot(prelim_temp4, aes(hab_type))+
         axis.title.x=element_text(size=14, face="bold"),
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-freq_hab_type
+freq_hab_type  ####confused why this isn't working, but will try to fix it later
