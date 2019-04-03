@@ -71,7 +71,7 @@ levels(prelim_temp4$hab_type)[levels(prelim_temp4$hab_type)=="GL"] <- "WITHOUT S
 ############
 ##re-order levels
 prelim_temp4$time_od <- factor(prelim_temp4$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
-prelim_temp4$pos_beh <- factor(prelim_temp4$pos_beh, levels = c("Ly", "St", "QS", "QW", "Bp", "Su", "VC"))
+prelim_temp4$pos_beh <- factor(prelim_temp4$pos_beh, levels = c("Bp", "Ly", "St", "QS", "QW", "Su", "VC"))
 prelim_temp4$hab_type <- factor(prelim_temp4$hab_type, levels = c("WITH SHADE", "WITHOUT SHADE"))
 
 ###change to factor & numeric
@@ -87,7 +87,7 @@ str(prelim_temp4)
 ##model new dataset
 mod_3 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp4)
-summary(mod_3)
+summary(mod_3) ###still no significant difference with habitat type (shaded vs. not)
 confint(mod_3)
 
 summary(prelim_temp4$hab_type) ###WITH SHADE: 762; WITHOUT SHADE: 42
