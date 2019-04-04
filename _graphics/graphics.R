@@ -121,6 +121,27 @@ ggsave("counts_pos_beh.pdf", width=10, height=6, units="in")
 
 ggsave("counts_pos_beh.png", width=10, height=6, units="in")
 
+###Frequency plot of Pos_beh
+freq_pos_beh <- ggplot(prelim_temp, aes(pos_beh))+
+  geom_bar(aes(y = (..count..)/sum(..count..)), bins = 10, 
+                 fill = "mediumpurple1", colour = "mediumpurple1")+
+  ggtitle("Frequency of Positional Behavior") +
+  scale_y_continuous(name = "Frequency", labels = percent)+
+  scale_x_discrete(name = "Positional Behavior")+
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+
+freq_pos_beh
+
+### save plot ####
+ggsave("freq_pos_beh.pdf", width=10, height=6, units="in")
+
+ggsave("freq_pos_beh.png", width=10, height=6, units="in")
+
 #####more count plots #####
 
 ggplot(prelim_temp, aes(hab_type))+

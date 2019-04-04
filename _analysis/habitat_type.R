@@ -117,10 +117,10 @@ ggsave("counts_shaded.png", width=10, height=6, units="in")
 ###frequency of shaded vs. not
 
 freq_hab_type <- ggplot(prelim_temp4, aes(hab_type))+
-  geom_histogram(aes(y = (..count..)/sum(..count..)), bins = 10, 
+  geom_bar(aes(y = (..count..)/sum(..count..)), bins = 10, 
                  fill = "mediumpurple1", colour = "mediumpurple1")+
   ggtitle("Frequency of Shaded vs. Non-Shaded Habitat Types") +
-  scale_y_discrete(name = "Frequency", labels = percent)+
+  scale_y_continuous(name = "Frequency", labels = percent)+
   scale_x_discrete(name = "Habitat Type")+
   theme_minimal()+
   theme(axis.text.x=element_text(size=14),
