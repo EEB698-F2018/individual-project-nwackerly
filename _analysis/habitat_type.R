@@ -1,9 +1,14 @@
 # load libraries
-library(tidyverse)
+library(scales)
 library(readr)
 library(lubridate)
 library(magrittr)
+library(ggplot2)
+library(car)
+library(emmeans)
 library(lme4)
+library(ggthemes)
+library(tidyverse) 
 
 #read in data
 prelim_tidy <- read_csv("_data/_tidy/prelim_data_tidycols.csv")
