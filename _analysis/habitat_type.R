@@ -134,4 +134,9 @@ freq_hab_type <- ggplot(prelim_temp4, aes(hab_type))+
         axis.title.x=element_text(size=14, face="bold"),
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-freq_hab_type  ####confused why this isn't working, but will try to fix it later
+freq_hab_type  
+
+##save plot
+ggsave("freq_hab_type.pdf", width=10, height=6, units="in")
+
+ggsave("freq_hab_type.png", width=10, height=6, units="in")
