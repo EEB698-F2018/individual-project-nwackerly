@@ -151,7 +151,7 @@ View(prelim_temp5)
 
 #####combine habitat types
 levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="WD"] <- "OPEN"
-levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="BMWD"] <- "OPEM"
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="BMWD"] <- "OPEN"
 levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="BM"] <- "OPEN"
 levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="GA"] <- "CLOSED"
 levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="GL"] <- "OPEN"
@@ -176,14 +176,14 @@ str(prelim_temp5)
 ##model new dataset
 mod_4 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
                 (1|individual), data = prelim_temp5)
-summary(mod_4) ###
+summary(mod_4) ###still no signif diffs between habitat types; & now QS & Bp are no longer signif
 confint(mod_4)
 
-summary(prelim_temp5$hab_type) ##OPEN: __; CLOSED: __
+summary(prelim_temp5$hab_type) ##OPEN: 738; CLOSED: 66
 
 ###plot habitat type open vs. closed
 
-counts_shaded <- ggplot(prelim_temp5, aes(hab_type))+
+counts_open <- ggplot(prelim_temp5, aes(hab_type))+
   geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
   ggtitle("Counts of Habitat Type") +
   scale_x_discrete(name = "Habitat Type", 
@@ -196,7 +196,7 @@ counts_shaded <- ggplot(prelim_temp5, aes(hab_type))+
         axis.title.x=element_text(size=14, face="bold"),
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-counts_shaded
+counts_open
 
 ##save plot
 ggsave("counts_open.pdf", width=10, height=6, units="in")
@@ -205,7 +205,7 @@ ggsave("counts_open.png", width=10, height=6, units="in")
 
 ###frequency of open vs. closed
 
-freq_hab_type <- ggplot(prelim_temp5, aes(hab_type))+
+freq_open <- ggplot(prelim_temp5, aes(hab_type))+
   geom_bar(aes(y = (..count..)/sum(..count..)), bins = 10, 
            fill = "mediumpurple1", colour = "mediumpurple1")+
   ggtitle("Frequency of Open vs. Closed Habitat Types") +
@@ -218,7 +218,7 @@ freq_hab_type <- ggplot(prelim_temp5, aes(hab_type))+
         axis.title.x=element_text(size=14, face="bold"),
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 
-freq_hab_type  
+freq_open  
 
 ##save plot
 ggsave("freq_open.pdf", width=10, height=6, units="in")
