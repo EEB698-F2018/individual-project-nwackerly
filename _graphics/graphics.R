@@ -122,13 +122,18 @@ ggsave("counts_pos_beh.pdf", width=10, height=6, units="in")
 ggsave("counts_pos_beh.png", width=10, height=6, units="in")
 
 ###Frequency plot of Pos_beh
-freq_pos_beh <- ggplot(prelim_temp, aes(pos_beh))+
+## Change levels for the plot 
+prelim_temp$pos_beh <- factor(prelim_temp$pos_beh, levels = c("Ly", "QS", "QW", "St", "Bp", "VC", "Su"))
+
+freq_pos_beh <- ggplot(prelim_temp, aes(pos_beh)) +
   geom_bar(aes(y = (..count..)/sum(..count..)), bins = 10, 
-                 fill = "mediumpurple1", colour = "mediumpurple1")+
+                 fill = "mediumpurple1", colour = "mediumpurple1") +
   ggtitle("Frequency of Positional Behavior") +
-  scale_y_continuous(name = "Frequency", labels = percent)+
-  scale_x_discrete(name = "Positional Behavior")+
-  theme_minimal()+
+  scale_y_continuous(name = "Percent", labels = percent) +
+  scale_x_discrete(name = "Positional Behavior", 
+                   labels = c("Lie", "Quad. Stand", "Quad. Walk", "Sit",
+                              "Bipedal", "Vert. Climb/Cling", "Suspensory")) +
+  theme_minimal() +
   theme(axis.text.x=element_text(size=14),
         axis.text.y=element_text(size=14),
         axis.title.y=element_text(size=14, face="bold"),
@@ -168,8 +173,8 @@ ggplot(prelim_temp, aes(amb_t))+
 freq_therm_t <- ggplot(prelim_temp, aes(therm_t))+
                   geom_histogram(aes(y = (..count..)/sum(..count..)), bins = 10, 
                       fill = "mediumpurple1", colour = "mediumpurple1")+
-                  ggtitle("Frequency of Chimpanzee Body Temperature") +
-                  scale_y_continuous(name = "Frequency", labels = percent)+
+                  ggtitle("Range of Chimpanzee Body Temperatures") +
+                  scale_y_continuous(name = "Percent", labels = percent)+
                   scale_x_continuous(name = "Chimpanzee Body Temperature")+
                   theme_minimal()+
                   theme(axis.text.x=element_text(size=14),
