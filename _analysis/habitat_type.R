@@ -143,3 +143,84 @@ freq_hab_type
 ggsave("freq_hab_type.pdf", width=10, height=6, units="in")
 
 ggsave("freq_hab_type.png", width=10, height=6, units="in")
+
+
+###new dataset for open vs. closed habitats
+prelim_temp5 <- prelim_temp3
+View(prelim_temp5)
+
+#####combine habitat types
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="WD"] <- "OPEN"
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="BMWD"] <- "OPEM"
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="BM"] <- "OPEN"
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="GA"] <- "CLOSED"
+levels(prelim_temp5$hab_type)[levels(prelim_temp5$hab_type)=="GL"] <- "OPEN"
+
+
+############
+##re-order levels
+prelim_temp5$time_od <- factor(prelim_temp5$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+prelim_temp5$pos_beh <- factor(prelim_temp5$pos_beh, levels = c("Bp", "Ly", "St", "QS", "QW", "Su", "VC"))
+prelim_temp5$hab_type <- factor(prelim_temp5$hab_type, levels = c("OPEN", "CLOSED"))
+
+###change to factor & numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
+
+prelim_temp5[factor_cols] <- lapply(prelim_temp5[factor_cols], as.factor)
+
+prelim_temp5[numeric_cols] <- lapply(prelim_temp5[numeric_cols], as.numeric)
+
+str(prelim_temp5)
+
+##model new dataset
+mod_4 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp5)
+summary(mod_4) ###
+confint(mod_4)
+
+summary(prelim_temp5$hab_type) ##OPEN: __; CLOSED: __
+
+###plot habitat type open vs. closed
+
+counts_shaded <- ggplot(prelim_temp5, aes(hab_type))+
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Counts of Habitat Type") +
+  scale_x_discrete(name = "Habitat Type", 
+                   labels = c("OPEN", "CLOSED")) +
+  scale_y_continuous(name = "Counts") +
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+
+counts_shaded
+
+##save plot
+ggsave("counts_open.pdf", width=10, height=6, units="in")
+
+ggsave("counts_open.png", width=10, height=6, units="in")
+
+###frequency of open vs. closed
+
+freq_hab_type <- ggplot(prelim_temp5, aes(hab_type))+
+  geom_bar(aes(y = (..count..)/sum(..count..)), bins = 10, 
+           fill = "mediumpurple1", colour = "mediumpurple1")+
+  ggtitle("Frequency of Open vs. Closed Habitat Types") +
+  scale_y_continuous(name = "Percent", labels = percent)+
+  scale_x_discrete(name = "Habitat Type")+
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+
+freq_hab_type  
+
+##save plot
+ggsave("freq_open.pdf", width=10, height=6, units="in")
+
+ggsave("freq_open.png", width=10, height=6, units="in")
