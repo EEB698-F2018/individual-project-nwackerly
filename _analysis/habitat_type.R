@@ -1,3 +1,6 @@
+##clear environment
+#rm(list=ls())
+
 # load libraries
 library(scales)
 library(readr)
