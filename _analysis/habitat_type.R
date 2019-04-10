@@ -180,6 +180,7 @@ summary(mod_4) ###still no signif diffs between habitat types; & now QS & Bp are
 confint(mod_4)
 
 summary(prelim_temp5$hab_type) ##OPEN: 738; CLOSED: 66
+with(prelim_temp5, table(pos_beh, hab_type)) #IN CLOSED: Bp: 2, Ly: 20, St: 35, QS: 3, QW: 5, Su: 0, VC: 1
 
 ###plot habitat type open vs. closed
 
