@@ -126,4 +126,3 @@ ggplot(bipedal_data, aes(context, therm_t, color=pos_beh)) +
 
 ggplot(bipedal_data, aes(sun)) + 
   geom_histogram()
-
