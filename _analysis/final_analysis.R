@@ -70,3 +70,32 @@ coefs <- data.frame(coef(summary(mod_1)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
+##########
+#####have Sit/Squat as the outgroup
+##re-order levels
+prelim_temp3$time_od <- factor(prelim_temp3$time_od, levels = c("e_morning", "l_morning", "e_afternoon", "l_afternoon", "evening"))
+prelim_temp3$pos_beh <- factor(prelim_temp3$pos_beh, levels = c("St", "Ly", "Bp", "QS", "QW", "Su", "VC"))
+
+###change to factor & numeric
+factor_cols <- c("pos_beh","context", "substrate", "hab_type", "individual")
+numeric_cols <- c("sun", "therm_t", "t_lo", "t_hi", "amb_t")
+
+prelim_temp3[factor_cols] <- lapply(prelim_temp3[factor_cols], as.factor)
+
+prelim_temp3[numeric_cols] <- lapply(prelim_temp3[numeric_cols], as.numeric)
+
+str(prelim_temp3)
+
+##model minus outliers
+mod_2 <- lmer(therm_t ~ pos_beh + amb_t + sun + date + hab_type + 
+                (1|individual), data = prelim_temp3)
+summary(mod_2)
+confint(mod_2)
+
+#######get p-values########
+# extract coefficients
+coefs <- data.frame(coef(summary(mod_2)))
+# use normal distribution to approximate p-value
+coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+coefs
+
