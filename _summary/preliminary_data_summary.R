@@ -385,3 +385,31 @@ counts_time_od <- ggplot(prelim_temp, aes(time_od))+
         plot.title = element_text(hjust = 0.5, size=17, face="bold"))
 counts_time_od
 ##doesn't look too skewed; just a little less in the early afternoon, but by less than 100
+
+##### filter time of day ######
+data_e_morning <- prelim_temp %>%
+  filter(time_od == "e_morning")
+
+data_l_morning <- prelim_temp %>%
+  filter(time_od == "l_morning")
+
+data_e_afternoon <- prelim_temp %>%
+  filter(time_od == "e_afternoon")
+
+data_l_afternoon <- prelim_temp %>%
+  filter(time_od == "l_afternoon")
+
+data_evening <- prelim_temp %>%
+  filter(time_od == "evening")
+
+summary(data_e_morning$amb_t)
+summary(data_l_morning$amb_t)
+summary(data_e_afternoon$amb_t)
+summary(data_l_afternoon$amb_t)
+summary(data_evening$amb_t)
+
+##plot of time of day against ambient temp
+ggplot(prelim_temp, aes(time_od, amb_t)) +
+  geom_boxplot() + 
+  labs(x="Time of Day", y="Ambient Temperature") +
+  theme_classic()
