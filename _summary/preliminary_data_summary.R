@@ -413,3 +413,31 @@ ggplot(prelim_temp, aes(time_od, amb_t)) +
   geom_boxplot() + 
   labs(x="Time of Day", y="Ambient Temperature") +
   theme_classic()
+
+#######################################################
+#####Add time of day column
+prelim_temp$time_od2 <- NA
+
+prelim_temp$time_od2[prelim_temp$time <= 43200] <- "morning"
+prelim_temp$time_od2[prelim_temp$time > 43200 & prelim_temp$time < 61200] <- "afternoon"
+prelim_temp$time_od2[prelim_temp$time >= 61200] <- "evening"
+prelim_temp$time_od2 <- factor(prelim_temp$time_od2, levels = c("morning", "afternoon", "evening"))
+levels(prelim_temp$time_od2)
+View(prelim_temp)
+
+##filter time_od2
+data_morning <- prelim_temp %>%
+  filter(time_od2 == "morning")
+
+data_afternoon <- prelim_temp %>%
+  filter(time_od2 == "afternoon")
+
+data_evening <- prelim_temp %>%
+  filter(time_od2 == "evening")
+
+summary(data_morning$amb_t)
+summary(data_afternoon$amb_t)
+summary(data_evening$amb_t)
+
+
+### time of day & therm_t
