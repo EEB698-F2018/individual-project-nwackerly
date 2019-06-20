@@ -366,4 +366,22 @@ summary(prelim_temp$amb_t) #mean: 29.81, median: 30.10; Max: 36.5, Min: 19.4
 max(prelim_temp$amb_t) - min(prelim_temp$amb_t)  ##Range: 17.1
 IQR(prelim_temp$amb_t) ##5.9
 
-#################################################################3
+#################################################################
+#Time of Day summary
+summary(prelim_temp$time_od) ##e_morn: 198; l_morn: 192; e_after: 93; l_after:188; evening:133
+
+counts_time_od <- ggplot(prelim_temp, aes(time_od))+
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Amount in each Time of Day") +
+  scale_x_discrete(name = "Time of Day", 
+                   labels = c("Early Morning", "Late Morning", "Early Afternoon", "Late Afternoon", 
+                              "Evening")) +
+  scale_y_continuous(name = "Counts") +
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+counts_time_od
+##doesn't look too skewed; just a little less in the early afternoon, but by less than 100
