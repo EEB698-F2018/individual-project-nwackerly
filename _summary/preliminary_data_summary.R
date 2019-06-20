@@ -425,6 +425,24 @@ prelim_temp$time_od2 <- factor(prelim_temp$time_od2, levels = c("morning", "afte
 levels(prelim_temp$time_od2)
 View(prelim_temp)
 
+summary(prelim_temp$time_od2) ### morning: 390; afternoon: 281; evening: 133
+
+##plotting time_od2
+counts_time_od2 <- ggplot(prelim_temp, aes(time_od2))+
+  geom_bar(stat="count", fill = "mediumpurple1", colour = "mediumpurple1") + 
+  ggtitle("Amount in each Time of Day") +
+  scale_x_discrete(name = "Time of Day", 
+                   labels = c("Morning", "Afternoon", 
+                              "Evening")) +
+  scale_y_continuous(name = "Counts") +
+  theme_minimal()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+counts_time_od2
+
 ##filter time_od2
 data_morning <- prelim_temp %>%
   filter(time_od2 == "morning")
@@ -432,12 +450,51 @@ data_morning <- prelim_temp %>%
 data_afternoon <- prelim_temp %>%
   filter(time_od2 == "afternoon")
 
-data_evening <- prelim_temp %>%
+data_evening2 <- prelim_temp %>%
   filter(time_od2 == "evening")
 
-summary(data_morning$amb_t)
-summary(data_afternoon$amb_t)
-summary(data_evening$amb_t)
-
+summary(data_morning$amb_t) ##mean: 27.32; median: 27.80
+summary(data_afternoon$amb_t) ##mean: 32.23; median: 33.30
+summary(data_evening2$amb_t) ##mean: 31.97; median: 32.20 
 
 ### time of day & therm_t
+summary(data_morning$therm_t) ##mean: 32.83; median: 32.50
+summary(data_afternoon$therm_t) ##mean: 35.75; median: 35.70
+summary(data_evening2$therm_t) ##mean: 34.61; median: 34.30 
+
+ggplot(prelim_temp, aes(time_od, therm_t)) +
+  geom_boxplot() + 
+  labs(x="Time of Day", y="Body Temperature") +
+  theme_classic()
+
+ggplot(prelim_temp, aes(time_od2, therm_t)) +
+  geom_boxplot() + 
+  labs(x="Time of Day", y="Body Temperature") +
+  theme_classic()
+
+ggplot(prelim_temp, aes(time_od2, amb_t)) +
+  geom_boxplot() + 
+  labs(x="Time of Day", y="Ambient Temperature") +
+  theme_classic()
+
+##prettier box plot of time of day and therm_t
+
+time_od2_therm <- ggplot(prelim_temp, aes(time_od2, therm_t)) +
+  geom_boxplot(fill = "white", colour = "mediumpurple4", size = 1) + 
+  ggtitle("Body Temperature Throughout the Day") +
+  scale_x_discrete(name = "Time of Day", labels = c("Morning", "Afternoon", 
+                                                            "Evening")) +
+  scale_y_continuous(name = "Body Temperature") +
+  theme_classic()+
+  theme(axis.text.x=element_text(size=14),
+        axis.text.y=element_text(size=14),
+        axis.title.y=element_text(size=14, face="bold"),
+        axis.title.x=element_text(size=14, face="bold"),
+        plot.title = element_text(hjust = 0.5, size=17, face="bold"))
+
+time_od2_therm
+
+##save plot
+ggsave("time_od2_therm.pdf", width=10, height=6, units="in")
+
+ggsave("time_od2_therm.png", width=10, height=6, units="in")
